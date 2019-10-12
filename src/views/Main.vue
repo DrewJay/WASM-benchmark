@@ -253,6 +253,7 @@
                     color: $back-main;
                     padding: 6px 0px;
                     width: 150px;
+                    font-weight: bold;
                     text-align: center;
                     margin-right: 1rem;
                     border-radius: 5px;

@@ -14,7 +14,7 @@ typedef struct {
 
 typedef struct {
     int size;
-    stackItem **data;
+    stackItem *data;
 } stack;
 
 stack *iterative_allocator (int amount);

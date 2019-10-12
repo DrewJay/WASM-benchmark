@@ -77,15 +77,13 @@
         .v-input-label {
             color: $front-main;
             font-weight: 700;
-            font-size: .9rem;
+            font-size: 1rem;
             background-color: $front-main;
             color: $back-main;
-            padding: .3rem .8rem;
+            padding: .4rem .6rem .4rem .6rem;
+            margin-bottom: .3rem;
             display: table;
-            width: calc(250px - 3px);
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            text-align: center;
+            border-radius: 5px;
             transition: color .3s;
 
             &.focused {
@@ -100,7 +98,7 @@
             background: transparent;
             border: 3px solid $front-main;
             border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
+            border-radius: 5px;
             padding: 8px;
             font-weight: bold;
             color: $front-main;

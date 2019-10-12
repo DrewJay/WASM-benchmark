@@ -97,13 +97,13 @@
                 }
 
                 &:hover {
-                    color: #222233;
-                    background-color: #aaccff;
+                    color: white;
+                    background: transparent;
                 }
 
                 &.active {
-                    color: white;
-                    background: transparent;
+                    color: #222233;
+                    background-color: #aaccff;
                 }
             }    
         }

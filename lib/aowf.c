@@ -31,10 +31,10 @@ stack *iterative_allocator(int amount) {
 
     for(int itr=0; itr<_stack->size; itr++) {
     
-        stackItem *item = malloc(sizeof(stackItem));
+        stackItem item;
+        item.i = itr;
+        item.c = 'A' + (random() % 26);
 
-        item->i = itr;
-        item->c = 'A' + (random() % 26);
         _stack->data[itr] = item;
     }
 
@@ -63,5 +63,5 @@ int get_heap_offset() {
  */
 
 int get_size_factor() {
-    return sizeof(stackItem**) + 16;
+    return sizeof(stackItem);
 }

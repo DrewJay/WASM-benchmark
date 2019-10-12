@@ -11,7 +11,7 @@ const benchmarkConfig: object[] = [
             {
                 name: 'range',
                 type: 'text',
-                label: 'Insert number range',
+                label: 'Insert Number Range',
                 placeholder: 'Number Range',
             },
         ],
@@ -24,19 +24,19 @@ const benchmarkConfig: object[] = [
             {
                 name: 'base',
                 type: 'text',
-                label: 'Insert base',
+                label: 'Insert Base',
                 placeholder: 'Base',
             },
             {
                 name: 'exponent',
                 type: 'text',
-                label: 'Insert exponent',
+                label: 'Insert Exponent',
                 placeholder: 'Exponent',
             },
             {
                 name: 'accuracy',
                 type: 'text',
-                label: 'Insert accuracy',
+                label: 'Insert Accuracy',
                 placeholder: 'Accuracy',
             },
         ],
@@ -49,7 +49,7 @@ const benchmarkConfig: object[] = [
             {
                 name: 'iterations',
                 type: 'text',
-                label: 'Insert number of iterations',
+                label: 'Insert Number of Iterations',
                 placeholder: 'Iterations',
             },
         ],

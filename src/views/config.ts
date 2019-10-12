@@ -1,0 +1,87 @@
+// Configuration file describing data for generating
+// DOM content for benchmark and functional data like
+// callback names or identifiers.
+
+const benchmarkConfig: object[] = [
+    {
+        id: 'prime_lookup',
+        label: 'Prime Lookup',
+        note: 'Finds the amount of prime numbers in given range.',
+        fields: [
+            {
+                name: 'range',
+                type: 'text',
+                label: 'Insert number range',
+                placeholder: 'Number Range',
+            },
+        ],
+    },
+    {
+        id: 'taylor_chain',
+        label: 'Taylor Chain',
+        note: 'Calulates power using taylor logarithm method. Accuracy increases amount of iterations.',
+        fields: [
+            {
+                name: 'base',
+                type: 'text',
+                label: 'Insert base',
+                placeholder: 'Base',
+            },
+            {
+                name: 'exponent',
+                type: 'text',
+                label: 'Insert exponent',
+                placeholder: 'Exponent',
+            },
+            {
+                name: 'accuracy',
+                type: 'text',
+                label: 'Insert accuracy',
+                placeholder: 'Accuracy',
+            },
+        ],
+    },
+    {
+        id: 'iterative_allocation',
+        label: 'Iterative Allocation',
+        note: 'Creates n data structures including one randomly generated letter and one integer.',
+        fields: [
+            {
+                name: 'iterations',
+                type: 'text',
+                label: 'Insert number of iterations',
+                placeholder: 'Iterations',
+            },
+        ],
+    },
+    {
+        id: 'noperf_selfexec_info',
+        label: 'Session information',
+        norun: true,
+        fields: [
+            {
+                name: 'info',
+                type: null,
+            },
+        ],
+    },
+];
+
+const aliasConfig: object = {
+    js: {
+        prime_lookup: 'checkPrimes',
+        taylor_chain: 'taylorPow',
+        iterative_allocation: 'iterativeAllocator',
+        noperf_selfexec_info: 'setInfo',
+    },
+    c: {
+        prime_lookup: '_check_primes',
+        taylor_chain: '_taylor_pow',
+        iterative_allocation: '_iterative_allocator',
+    },
+};
+
+export {
+    benchmarkConfig,
+    aliasConfig,
+};

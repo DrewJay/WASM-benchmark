@@ -80,7 +80,7 @@
             font-size: 1rem;
             background-color: $front-main;
             color: $back-main;
-            padding: .4rem .6rem .4rem .6rem;
+            padding: .4rem 1rem .4rem 1rem;
             margin-bottom: .2rem;
             display: table;
             border-radius: 5px;
@@ -105,10 +105,10 @@
             width: 250px;
             
             &::-webkit-input-placeholder {
-                color: #a7a7d1;
-                font-weight: bold;
+                color: $front-main;
                 font-style: oblique;
                 font-size: .7rem;
+                font-weight: 100;
             }
         }
     }

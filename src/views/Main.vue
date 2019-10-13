@@ -1,7 +1,7 @@
 <template>
     <div class="home">
 
-        <h1>WASM Benchmark</h1>
+        <h1 id="maintitle">WASM Benchmark</h1>
 
         <!-- generate option picker -->
         <OptionPicker 
@@ -217,12 +217,20 @@
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s;
     }
+
     .fade-enter, .fade-leave-to {
         opacity: 0;
     }
 
     h1 {
         color: $front-main;
+
+        &#maintitle {
+            padding-left: 50px;
+            background-image: url('/img/icons/wasm.svg');
+            background-repeat: no-repeat;
+            background-size: 35px 30px;
+        }
     }
 
     h2 {
@@ -274,7 +282,7 @@
     }
 
     [class*="note"] {
-        color: $front-main;
+        color: white;
         font-style: oblique;
         border-radius: 20px;
     }

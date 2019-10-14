@@ -25,8 +25,8 @@ stack *iterative_allocator(int amount) {
 
     srand(time(NULL));
 
-    stack* _stack = malloc(sizeof(stack*));
-    _stack->data = malloc(sizeof(stackItem*) * amount);
+    stack* _stack = malloc(sizeof(stack));
+    _stack->data = malloc(sizeof(stackItem) * amount);
     _stack->size = amount;
 
     for(int itr=0; itr<_stack->size; itr++) {

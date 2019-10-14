@@ -200,12 +200,13 @@
             const inst: any = (this as any);
 
             const length: any = inst.module.HEAP8.length;
+            const stackOffset: any = (window as any).STACK_MAX;
 
             this.generated =
                 `<div><span>Total memory</span> <span>${length} bytes</span></div>
-                <div><span>Heap offset</span> <span>${inst.module.STACK_MAX} bytes</span></div>
-                <div><span>Usable memory</span> <span>${length - inst.module.STACK_MAX} bytes</span></div>
-                <div><span>Alloc index</span> <span>~${(length - inst.module.STACK_MAX) / inst.module._get_size_factor()} itrs</span></div>`;
+                <div><span>Heap offset</span> <span>${stackOffset} bytes</span></div>
+                <div><span>Usable memory</span> <span>${length - stackOffset} bytes</span></div>
+                <div><span>Alloc index</span> <span>~${(length - stackOffset) / inst.module._get_size_factor()} itrs</span></div>`;
         }
     }
 

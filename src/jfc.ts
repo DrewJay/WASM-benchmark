@@ -51,7 +51,7 @@ const taylorPow = (x: number, y: number, n: number) => {
  };
 
 
-const iterativeAllocator = (amount: number): any[] => {
+const iterativeAllocator = (amount: number): object => {
 
     const arr = new Array(amount);
 
@@ -64,8 +64,14 @@ const iterativeAllocator = (amount: number): any[] => {
         arr.push(obj);
     }
 
-    return arr;
+    const stack: object = {
+        size: amount,
+        data: arr,
+    };
+
+    return stack;
 };
+
 
 export default {
     checkPrimes,

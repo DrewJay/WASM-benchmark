@@ -23,11 +23,37 @@
     @Component
     export default class OptionPicker extends Vue {
 
+        public activeElement!: HTMLElement|null;
+        private type: string = 'OptionPicker';
+
         @Prop() private name!: string;
         @Prop() private values!: string[];
         @Prop() private ids!: string[];
+        @Prop() private bind!: string[];
 
-        private activeElement!: HTMLElement;
+
+        /**
+         * Handle option selection and return
+         * option unique identifier.
+         *
+         * @param {any} event - event object referent
+         *
+         * @return {string} - identifier of option
+         */
+
+        @Emit('select')
+        public handleSelect(evt: any) {
+
+            this.accessAndDisableBoundComponents();
+
+            if (this.activeElement) {
+                this.activeElement.classList.remove('active');
+            }
+
+            this.activeElement = evt!.currentTarget;
+            this.activeElement!.classList.add('active');
+            return evt!.currentTarget!.id;
+        }
 
 
         /**
@@ -44,24 +70,25 @@
 
 
         /**
-         * Handle option selection and return
-         * option unique identifier.
+         * Access bound OptionPickers and disable them. This
+         * creates functionality of entangled components.
          *
-         * @param {any} event - event object referent
-         *
-         * @return {string} - identifier of option
+         * @pipeType - disable other components
          */
 
-        @Emit('select')
-        private handleSelect(evt: any) {
+        private accessAndDisableBoundComponents() {
 
-            if (this.activeElement) {
-                this.activeElement.classList.remove('active');
-            }
+            if (!this.bind) { return; }
 
-            this.activeElement = evt!.currentTarget;
-            this.activeElement.classList.add('active');
-            return evt!.currentTarget!.id;
+            this.bind.forEach((name) => {
+
+                const component: any = this.$parent.$children.filter((val) => (val as any).name === name);
+
+                if (component[0].activeElement) {
+                    component[0]!.activeElement.classList.remove('active');
+                }
+
+            });
         }
     }
 

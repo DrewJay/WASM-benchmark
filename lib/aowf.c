@@ -11,10 +11,7 @@
  * where sz = int(sz), dt = int(addr(dt))
  * 
  * val(dt) = | it | it | it | it | ...*amount
- * where it = int(addr(it))
- * 
- * val(it) = si
- * where si = struct(stackItem)
+ * where it = struct(stackItem)
  * 
  * @param {int} amount - amount of items to define
  * 
@@ -25,8 +22,8 @@ stack *iterative_allocator(int amount) {
 
     srand(time(NULL));
 
-    stack* _stack = malloc(sizeof(stack));
-    _stack->data = malloc(sizeof(stackItem) * amount);
+    stack* _stack = malloc(sizeof *_stack);
+    _stack->data = malloc(sizeof *_stack->data * amount);
     _stack->size = amount;
 
     for(int itr=0; itr<_stack->size; itr++) {

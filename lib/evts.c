@@ -12,14 +12,13 @@
 
 EM_BOOL mouse_callback(int eventType, const EmscriptenMouseEvent *e, void *userData) {
     
-    if (eventType == EMSCRIPTEN_EVENT_CLICK) {
-        // TODO.
-    };
+    if (eventType == EMSCRIPTEN_EVENT_CLICK) {/*...*/};
+
     return 0;
 }
 
 
-int main() {
-   EMSCRIPTEN_RESULT ret = emscripten_set_click_callback(0, 0, 1, mouse_callback);
-   return 0;
+int main() {    
+    EMSCRIPTEN_RESULT ret = emscripten_set_click_callback(0, 0, 1, mouse_callback);
+    return 0;
 }

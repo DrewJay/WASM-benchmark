@@ -10,14 +10,15 @@
 typedef struct {
     int i;
     char c;
-} stackItem;
+} pack;
 
 typedef struct {
-    int size;
-    stackItem *data;
-} stack;
+    int item_amount;
+    int item_size;
+    pack *dataPtr;
+} packLine;
 
-stack *iterative_allocator (int amount);
+packLine *iterative_allocator (int amount);
 int get_heap_offset ();
 int get_size_factor (); 
 

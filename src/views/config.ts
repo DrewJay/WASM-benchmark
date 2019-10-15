@@ -42,7 +42,7 @@ const benchmarkConfig: object[] = [
         ],
     },
     {
-        id: 'iterative_allocation',
+        id: 'memconsume_iterative_allocation',
         label: 'Iterative Allocation',
         note: 'Creates n data structures including one randomly generated letter and one integer.',
         fields: [
@@ -55,12 +55,27 @@ const benchmarkConfig: object[] = [
         ],
     },
     {
-        id: 'noperf_selfexec_info',
+        id: 'memconsume_noperf_particle_animation',
+        label: 'Particle Animation (Beta)',
+        note: 'Compare performance of large amount of partiles being animated.',
+        fields: [
+            {
+                name: 'particles',
+                type: 'text',
+                label: 'Amount of Particles',
+                placeholder: '@int',
+            },
+            {
+                type: 'canvas',
+            },
+        ],
+    },
+    {
+        id: 'selfexec_info',
         label: 'Session information',
         norun: true,
         fields: [
             {
-                name: 'info',
                 type: null,
             },
         ],
@@ -71,13 +86,14 @@ const aliasConfig: object = {
     js: {
         prime_lookup: 'checkPrimes',
         taylor_chain: 'taylorPow',
-        iterative_allocation: 'iterativeAllocator',
-        noperf_selfexec_info: 'setInfo',
+        memconsume_iterative_allocation: 'iterativeAllocator',
+        selfexec_info: 'setInfo',
+        memconsume_noperf_particle_animation: 'setCanvas',
     },
     c: {
         prime_lookup: '_check_primes',
         taylor_chain: '_taylor_pow',
-        iterative_allocation: '_iterative_allocator',
+        memconsume_iterative_allocation: '_iterative_allocator',
     },
 };
 

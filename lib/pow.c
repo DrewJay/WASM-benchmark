@@ -1,5 +1,4 @@
 #include "headers/pow.h"
-#include "headers/config.h"
 
 /*
  * Function:  taylor_log
@@ -76,10 +75,10 @@ double taylor_pow(double x, double y, unsigned int n) {
 
 exponentialDefaults *get_exponential_defaults() {
   
-  exponentialDefaults *ed = malloc(sizeof(exponentialDefaults));
-  ed->base = BASE;
-  ed->exponent = EXPO;
-  ed->iterations = ITER;
+    exponentialDefaults *ed = malloc(sizeof(exponentialDefaults));
+    ed->base = BASE;
+    ed->exponent = EXPO;
+    ed->iterations = ITER;
 
-  return ed;
+    return ed;
 }

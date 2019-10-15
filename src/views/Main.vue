@@ -36,6 +36,8 @@
                     <div v-if="!_val.type" v-html="generated">
                     </div>
 
+                    <canvas v-if="_val.type === 'canvas'" class='cnv' width="268"></canvas>
+
                 </div>
                 
                 <br/>
@@ -87,9 +89,11 @@
         private config: object[] = benchmarkConfig;
         private aliases: any = aliasConfig;
         private benchmark: string = '';
-        private values: any = {};
+        private inputValues: any = {};
         private times: any = {c: null, js: null};
         private generated: string = '';
+        private animationFrameId: any = 0;
+        private localAddressStack: any[] = [];
 
 
         /**
@@ -99,7 +103,11 @@
          */
 
         private handleSelect(val: string) {
+            
             this.benchmark = val;
+
+            (window as any).cancelAnimationFrame(this.animationFrameId);
+            this.freeAddresses();
 
             if (val.includes('selfexec')) {
                 this.invokeSelfExecutables();
@@ -115,7 +123,7 @@
 
         private handleChange(val: string) {
             const split: any[] = val.split('=');
-            this.values[`${this.benchmark}.${split[0]}`] = parseInt(split[1], 10);
+            this.inputValues[`${this.benchmark}.${split[0]}`] = parseInt(split[1], 10);
         }
 
 
@@ -130,11 +138,16 @@
          */
 
         private perf(callback: (...args: any) => number): number {
+            
             const t1: number = performance.now();
-            callback(...this.sniffParams());
+            const result = callback(...this.sniffParams());
             const t2: number = performance.now();
 
-            return (t2 - t1) / 1000;
+            const diff =  (t2 - t1) / 1000;
+
+            this.pushAddresses(result);
+
+            return diff;
         }
 
 
@@ -146,7 +159,8 @@
          */
 
         private sniffParams(): any[] {
-            return Object.keys(this.values).filter((val) => val.includes(this.benchmark)).map((val) => this.values[val]);
+            return Object.keys(this.inputValues)
+                .filter((val) => val.includes(this.benchmark)).map((val) => this.inputValues[val]);
         }
 
 
@@ -158,6 +172,11 @@
          */
 
         private handlePress(val: string) {
+
+            if (val.includes('noperf')) {
+                (this as any)[this.aliases.js[val]]();
+                return;
+            }
 
             const translate: string[] = [this.aliases.js[this.benchmark], this.aliases.c[this.benchmark]];
             const jsTime: number = this.perf((jfc as any)[translate[0]]);
@@ -197,6 +216,7 @@
          */
 
         private setInfo() {
+            
             const inst: any = (this as any);
 
             const length: any = inst.module.HEAP8.length;
@@ -207,6 +227,96 @@
                 <div><span>Heap offset</span> <span>${stackOffset} bytes</span></div>
                 <div><span>Usable memory</span> <span>${length - stackOffset} bytes</span></div>
                 <div><span>Alloc index</span> <span>~${(length - stackOffset) / inst.module._get_size_factor()} itrs</span></div>`;
+        }
+
+
+        /**
+         * This callback is dynamically called from noperf invoking
+         * call chain. It animates canvas based on parameters.
+         *
+         * @pipeType - modifies DOM
+         */
+
+        private setCanvas() {
+            
+            const canvas: any = document.getElementsByClassName('cnv')[0];
+            const context = canvas.getContext('2d');
+
+            (window as any).cancelAnimationFrame(this.animationFrameId);
+
+            const addr: number = (this as any).module._canvas_init(canvas.width, canvas.height, this.sniffParams()[0]);
+            this.pushAddresses(addr);
+            this.renderPointsFromOffset(addr, canvas, context);
+        }
+
+
+        /**
+         * Get all point structures from memory offset and
+         * render them in the canvas.
+         *
+         * @param {number} address - start offset of structure array
+         * @param {any} canvas - canvas DOM element reference
+         * @param {any} context - context object reference
+         */
+
+        private renderPointsFromOffset(address: number, canvas: any, context: any) {
+
+            const itemAmount = (window as any).getValue(address, 'i32');
+            const itemSize = (window as any).getValue(address + 4, 'i32');
+            const directAddress = (window as any).getValue(address + 8, '*');
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = directAddress; i < directAddress + itemAmount * itemSize; i += itemSize) {
+                
+                const [x, y] = [(window as any).getValue(i, 'double'), (window as any).getValue(i + 8, 'double')];
+
+                context.beginPath();
+                context.arc(x, y, 1, 0, 2 * Math.PI, false);
+                context.fillStyle = 'yellow';
+                context.fill();
+            }
+
+            (window as any)._canvas_move();
+
+            this.animationFrameId = window.requestAnimationFrame( () => {
+                this.renderPointsFromOffset(address, canvas, context);
+            });
+        }
+
+
+        /**
+         * Sniff if perf callback used any heap memory. If it did,
+         * push it to address stack, because addresses need to be
+         * later released.
+         *
+         * @param {any} value - value returned from perf callback
+         */
+
+        private pushAddresses(value: any) {
+
+            if (this.benchmark.includes('memconsume')) {
+                if (typeof value === 'number') {
+                    this.localAddressStack[0] = value;
+                    this.localAddressStack[1] = (window as any).getValue(value + 8, '*');
+                }
+            }
+        }
+
+
+        /**
+         * Free addresses from localAddressStack.
+         *
+         * @pipeType - modify local state
+         */
+
+        private freeAddresses() {
+
+            this.localAddressStack.forEach ((val) => {
+                (window as any)._free(val);
+            });
+
+            this.localAddressStack = [];
         }
     }
 
@@ -242,7 +352,14 @@
             margin-top: 1.5rem;
         }
 
-        &#noperf_selfexec_info {
+        &#memconsume_noperf_particle_animation {
+            canvas {
+                background-color: black;
+                border: 2px solid $front-main;
+            }
+        }
+
+        &#selfexec_info {
             div div {
                 display: block;
                 color: $front-main;

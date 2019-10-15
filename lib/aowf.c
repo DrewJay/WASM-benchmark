@@ -1,46 +1,50 @@
 #include "headers/config.h"
 #include "headers/aowf.h"
 
+packLine *pack_l;
+
 /** 
  * Create ${amount} amount of structures and
  * allocate sufficient memory for them.
  * 
- * Returns addres 's' of the stack.
+ * Returns addres 's' of the pack.
  * 
  * val(s) = | sz | sz | sz | sz | dt | dt | dt | dt |
  * where sz = int(sz), dt = int(addr(dt))
  * 
  * val(dt) = | it | it | it | it | ...*amount
- * where it = struct(stackItem)
+ * where it = struct(packLine)
  * 
  * @param {int} amount - amount of items to define
  * 
- * @return {stack*} - address of a stack
+ * @return {pack*} - address of a pack
  */
 
-stack *iterative_allocator(int amount) {
+packLine *iterative_allocator(int amount) {
 
-    srand(time(NULL));
+    free(pack_l->dataPtr);
+    free(pack_l);
 
-    stack* _stack = malloc(sizeof *_stack);
-    _stack->data = malloc(sizeof *_stack->data * amount);
-    _stack->size = amount;
+    pack_l = malloc(sizeof *pack_l);
+    pack_l->item_amount = amount;
+    pack_l->item_size = sizeof(pack);
+    pack_l->dataPtr = malloc(sizeof *pack_l->dataPtr * amount);
 
-    for(int itr=0; itr<_stack->size; itr++) {
+    for(int itr=0; itr<pack_l->item_amount; itr++) {
     
-        stackItem item;
+        pack item;
         item.i = itr;
         item.c = 'A' + (random() % 26);
 
-        _stack->data[itr] = item;
+        pack_l->dataPtr[itr] = item;
     }
 
-    return _stack;
+    return pack_l;
 }
 
 
 /**
- * Find where malloc allocates dummy data. Useful
+ * Find where malloc allocates dummy dataPtr. Useful
  * when deciding real usable memory.
  * 
  * @return {int} - memory address
@@ -60,5 +64,5 @@ int get_heap_offset() {
  */
 
 int get_size_factor() {
-    return sizeof(stackItem);
+    return sizeof(pack);
 }

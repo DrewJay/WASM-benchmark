@@ -1,5 +1,4 @@
 #include "headers/prime.h"
-#include "headers/config.h"
 
 /** 
  * Check if number is prime by iterating 

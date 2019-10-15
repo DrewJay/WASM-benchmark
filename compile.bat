@@ -1,1 +1,1 @@
-emcc lib/prime.c lib/pow.c lib/aowf.c lib/evts.c -s WASM=1 -s EXPORTED_FUNCTIONS="['_check_primes','_get_numeric_range','_taylor_pow','_get_exponential_defaults','_iterative_allocator','_get_heap_offset','_get_size_factor','_main']" -o public/wasm/cfc.js
+emcc lib/prime.c lib/pow.c lib/aowf.c lib/canvas.c -s WASM=1 -s EXPORTED_FUNCTIONS="['_check_primes','_taylor_pow','_iterative_allocator','_get_size_factor','_canvas_init','_canvas_move','_main']" -o public/wasm/cfc.js

@@ -1,4 +1,7 @@
-# benchmark
+# WASM-benchmark
+
+## About
+This application visualizes performance differences between classic JavaScript applications and their WebAssembly counterpart.
 
 ## Project setup
 ```

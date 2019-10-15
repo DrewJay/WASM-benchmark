@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <math.h>
+#include "config.h"
 
 typedef struct {
     int base;

@@ -621,8 +621,8 @@ var wasmMemory;
 // In the wasm backend, we polyfill the WebAssembly object,
 // so this creates a (non-native-wasm) table for us.
 var wasmTable = new WebAssembly.Table({
-  'initial': 14,
-  'maximum': 14,
+  'initial': 10,
+  'maximum': 10,
   'element': 'anyfunc'
 });
 
@@ -1227,11 +1227,11 @@ function updateGlobalBufferAndViews(buf) {
 
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 4112,
+    STACK_BASE = 4144,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 5246992,
-    DYNAMIC_BASE = 5246992,
-    DYNAMICTOP_PTR = 3904;
+    STACK_MAX = 5247024,
+    DYNAMIC_BASE = 5247024,
+    DYNAMICTOP_PTR = 3936;
 
 assert(STACK_BASE % 16 === 0, 'stack must start aligned');
 assert(DYNAMIC_BASE % 16 === 0, 'heap must start aligned');
@@ -1768,7 +1768,7 @@ var ASM_CONSTS = [];
 
 
 
-// STATICTOP = STATIC_BASE + 3088;
+// STATICTOP = STATIC_BASE + 3120;
 /* global initializers */ /*__ATINIT__.push();*/
 
 
@@ -1779,7 +1779,7 @@ var ASM_CONSTS = [];
 
 
 /* no memory initializer */
-var tempDoublePtr = 4096
+var tempDoublePtr = 4128
 assert(tempDoublePtr % 8 == 0);
 
 function copyTempFloat(ptr) { // functions, because inlining this code increases code size too much
@@ -1982,210 +1982,6 @@ function copyTempDouble(ptr) {
     }
 
   
-  
-  var JSEvents={keyEvent:0,mouseEvent:0,wheelEvent:0,uiEvent:0,focusEvent:0,deviceOrientationEvent:0,deviceMotionEvent:0,fullscreenChangeEvent:0,pointerlockChangeEvent:0,visibilityChangeEvent:0,touchEvent:0,previousFullscreenElement:null,previousScreenX:null,previousScreenY:null,removeEventListenersRegistered:false,removeAllEventListeners:function() {
-        for(var i = JSEvents.eventHandlers.length-1; i >= 0; --i) {
-          JSEvents._removeHandler(i);
-        }
-        JSEvents.eventHandlers = [];
-        JSEvents.deferredCalls = [];
-      },registerRemoveEventListeners:function() {
-        if (!JSEvents.removeEventListenersRegistered) {
-          __ATEXIT__.push(JSEvents.removeAllEventListeners);
-          JSEvents.removeEventListenersRegistered = true;
-        }
-      },deferredCalls:[],deferCall:function(targetFunction, precedence, argsList) {
-        function arraysHaveEqualContent(arrA, arrB) {
-          if (arrA.length != arrB.length) return false;
-  
-          for(var i in arrA) {
-            if (arrA[i] != arrB[i]) return false;
-          }
-          return true;
-        }
-        // Test if the given call was already queued, and if so, don't add it again.
-        for(var i in JSEvents.deferredCalls) {
-          var call = JSEvents.deferredCalls[i];
-          if (call.targetFunction == targetFunction && arraysHaveEqualContent(call.argsList, argsList)) {
-            return;
-          }
-        }
-        JSEvents.deferredCalls.push({
-          targetFunction: targetFunction,
-          precedence: precedence,
-          argsList: argsList
-        });
-  
-        JSEvents.deferredCalls.sort(function(x,y) { return x.precedence < y.precedence; });
-      },removeDeferredCalls:function(targetFunction) {
-        for(var i = 0; i < JSEvents.deferredCalls.length; ++i) {
-          if (JSEvents.deferredCalls[i].targetFunction == targetFunction) {
-            JSEvents.deferredCalls.splice(i, 1);
-            --i;
-          }
-        }
-      },canPerformEventHandlerRequests:function() {
-        return JSEvents.inEventHandler && JSEvents.currentEventHandler.allowsDeferredCalls;
-      },runDeferredCalls:function() {
-        if (!JSEvents.canPerformEventHandlerRequests()) {
-          return;
-        }
-        for(var i = 0; i < JSEvents.deferredCalls.length; ++i) {
-          var call = JSEvents.deferredCalls[i];
-          JSEvents.deferredCalls.splice(i, 1);
-          --i;
-          call.targetFunction.apply(this, call.argsList);
-        }
-      },inEventHandler:0,currentEventHandler:null,eventHandlers:[],isInternetExplorer:function() { return navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0; },removeAllHandlersOnTarget:function(target, eventTypeString) {
-        for(var i = 0; i < JSEvents.eventHandlers.length; ++i) {
-          if (JSEvents.eventHandlers[i].target == target && 
-            (!eventTypeString || eventTypeString == JSEvents.eventHandlers[i].eventTypeString)) {
-             JSEvents._removeHandler(i--);
-           }
-        }
-      },_removeHandler:function(i) {
-        var h = JSEvents.eventHandlers[i];
-        h.target.removeEventListener(h.eventTypeString, h.eventListenerFunc, h.useCapture);
-        JSEvents.eventHandlers.splice(i, 1);
-      },registerOrRemoveHandler:function(eventHandler) {
-        var jsEventHandler = function jsEventHandler(event) {
-          // Increment nesting count for the event handler.
-          ++JSEvents.inEventHandler;
-          JSEvents.currentEventHandler = eventHandler;
-          // Process any old deferred calls the user has placed.
-          JSEvents.runDeferredCalls();
-          // Process the actual event, calls back to user C code handler.
-          eventHandler.handlerFunc(event);
-          // Process any new deferred calls that were placed right now from this event handler.
-          JSEvents.runDeferredCalls();
-          // Out of event handler - restore nesting count.
-          --JSEvents.inEventHandler;
-        };
-        
-        if (eventHandler.callbackfunc) {
-          eventHandler.eventListenerFunc = jsEventHandler;
-          eventHandler.target.addEventListener(eventHandler.eventTypeString, jsEventHandler, eventHandler.useCapture);
-          JSEvents.eventHandlers.push(eventHandler);
-          JSEvents.registerRemoveEventListeners();
-        } else {
-          for(var i = 0; i < JSEvents.eventHandlers.length; ++i) {
-            if (JSEvents.eventHandlers[i].target == eventHandler.target
-             && JSEvents.eventHandlers[i].eventTypeString == eventHandler.eventTypeString) {
-               JSEvents._removeHandler(i--);
-             }
-          }
-        }
-      },getBoundingClientRectOrZeros:function(target) {
-        return target.getBoundingClientRect ? target.getBoundingClientRect() : { left: 0, top: 0 };
-      },pageScrollPos:function() {
-        if (pageXOffset > 0 || pageYOffset > 0) {
-          return [pageXOffset, pageYOffset];
-        }
-        if (typeof document.documentElement.scrollLeft !== 'undefined' || typeof document.documentElement.scrollTop !== 'undefined') {
-          return [document.documentElement.scrollLeft, document.documentElement.scrollTop];
-        }
-        return [document.body.scrollLeft|0, document.body.scrollTop|0];
-      },getNodeNameForTarget:function(target) {
-        if (!target) return '';
-        if (target == window) return '#window';
-        if (target == screen) return '#screen';
-        return (target && target.nodeName) ? target.nodeName : '';
-      },tick:function() {
-        if (window['performance'] && window['performance']['now']) return window['performance']['now']();
-        else return Date.now();
-      },fullscreenEnabled:function() {
-        return document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled || document.msFullscreenEnabled;
-      }};
-  
-  function __fillMouseEventData(eventStruct, e, target) {
-      HEAPF64[((eventStruct)>>3)]=JSEvents.tick();
-      HEAP32[(((eventStruct)+(8))>>2)]=e.screenX;
-      HEAP32[(((eventStruct)+(12))>>2)]=e.screenY;
-      HEAP32[(((eventStruct)+(16))>>2)]=e.clientX;
-      HEAP32[(((eventStruct)+(20))>>2)]=e.clientY;
-      HEAP32[(((eventStruct)+(24))>>2)]=e.ctrlKey;
-      HEAP32[(((eventStruct)+(28))>>2)]=e.shiftKey;
-      HEAP32[(((eventStruct)+(32))>>2)]=e.altKey;
-      HEAP32[(((eventStruct)+(36))>>2)]=e.metaKey;
-      HEAP16[(((eventStruct)+(40))>>1)]=e.button;
-      HEAP16[(((eventStruct)+(42))>>1)]=e.buttons;
-      HEAP32[(((eventStruct)+(44))>>2)]=e["movementX"] || e["mozMovementX"] || e["webkitMovementX"] || (e.screenX-JSEvents.previousScreenX);
-      HEAP32[(((eventStruct)+(48))>>2)]=e["movementY"] || e["mozMovementY"] || e["webkitMovementY"] || (e.screenY-JSEvents.previousScreenY);
-  
-      if (Module['canvas']) {
-        var rect = Module['canvas'].getBoundingClientRect();
-        HEAP32[(((eventStruct)+(60))>>2)]=e.clientX - rect.left;
-        HEAP32[(((eventStruct)+(64))>>2)]=e.clientY - rect.top;
-      } else { // Canvas is not initialized, return 0.
-        HEAP32[(((eventStruct)+(60))>>2)]=0;
-        HEAP32[(((eventStruct)+(64))>>2)]=0;
-      }
-      if (target) {
-        var rect = JSEvents.getBoundingClientRectOrZeros(target);
-        HEAP32[(((eventStruct)+(52))>>2)]=e.clientX - rect.left;
-        HEAP32[(((eventStruct)+(56))>>2)]=e.clientY - rect.top;
-      } else { // No specific target passed, return 0.
-        HEAP32[(((eventStruct)+(52))>>2)]=0;
-        HEAP32[(((eventStruct)+(56))>>2)]=0;
-      }
-      // wheel and mousewheel events contain wrong screenX/screenY on chrome/opera
-        // https://github.com/emscripten-core/emscripten/pull/4997
-      // https://bugs.chromium.org/p/chromium/issues/detail?id=699956
-      if (e.type !== 'wheel' && e.type !== 'mousewheel') {
-        JSEvents.previousScreenX = e.screenX;
-        JSEvents.previousScreenY = e.screenY;
-      }
-    }
-  
-  
-  var __specialEventTargets=[0, typeof document !== 'undefined' ? document : 0, typeof window !== 'undefined' ? window : 0];function __findEventTarget(target) {
-      warnOnce('Rules for selecting event targets in HTML5 API are changing: instead of using document.getElementById() that only can refer to elements by their DOM ID, new event target selection mechanism uses the more flexible function document.querySelector() that can look up element names, classes, and complex CSS selectors. Build with -s DISABLE_DEPRECATED_FIND_EVENT_TARGET_BEHAVIOR=1 to change to the new lookup rules. See https://github.com/emscripten-core/emscripten/pull/7977 for more details.');
-      try {
-        // The sensible "default" target varies between events, but use window as the default
-        // since DOM events mostly can default to that. Specific callback registrations
-        // override their own defaults.
-        if (!target) return window;
-        if (typeof target === "number") target = __specialEventTargets[target] || UTF8ToString(target);
-        if (target === '#window') return window;
-        else if (target === '#document') return document;
-        else if (target === '#screen') return screen;
-        else if (target === '#canvas') return Module['canvas'];
-        return (typeof target === 'string') ? document.getElementById(target) : target;
-      } catch(e) {
-        // In Web Workers, some objects above, such as '#document' do not exist. Gracefully
-        // return null for them.
-        return null;
-      }
-    }function __registerMouseEventCallback(target, userData, useCapture, callbackfunc, eventTypeId, eventTypeString, targetThread) {
-      if (!JSEvents.mouseEvent) JSEvents.mouseEvent = _malloc( 72 );
-      target = __findEventTarget(target);
-  
-      var mouseEventHandlerFunc = function(ev) {
-        var e = ev || event;
-  
-        // TODO: Make this access thread safe, or this could update live while app is reading it.
-        __fillMouseEventData(JSEvents.mouseEvent, e, target);
-  
-        if (dynCall_iiii(callbackfunc, eventTypeId, JSEvents.mouseEvent, userData)) e.preventDefault();
-      };
-  
-      var eventHandler = {
-        target: target,
-        allowsDeferredCalls: eventTypeString != 'mousemove' && eventTypeString != 'mouseenter' && eventTypeString != 'mouseleave', // Mouse move events do not allow fullscreen/pointer lock requests to be handled in them!
-        eventTypeString: eventTypeString,
-        callbackfunc: callbackfunc,
-        handlerFunc: mouseEventHandlerFunc,
-        useCapture: useCapture
-      };
-      // In IE, mousedown events don't either allow deferred calls to be run!
-      if (JSEvents.isInternetExplorer() && eventTypeString == 'mousedown') eventHandler.allowsDeferredCalls = false;
-      JSEvents.registerOrRemoveHandler(eventHandler);
-    }function _emscripten_set_click_callback_on_thread(target, userData, useCapture, callbackfunc, targetThread) {
-      __registerMouseEventCallback(target, userData, useCapture, callbackfunc, 4, "click", targetThread);
-      return 0;
-    }
-
-  
   function _emscripten_memcpy_big(dest, src, num) {
       HEAPU8.set(HEAPU8.subarray(src, src+num), dest);
     }
@@ -2241,7 +2037,7 @@ function nullFunc_jiji(x) { abortFnPtrError(x, 'jiji'); }
 
 var asmGlobalArg = {};
 
-var asmLibraryArg = { "___lock": ___lock, "___unlock": ___unlock, "___wasi_fd_write": ___wasi_fd_write, "__fillMouseEventData": __fillMouseEventData, "__findEventTarget": __findEventTarget, "__memory_base": 1024, "__registerMouseEventCallback": __registerMouseEventCallback, "__table_base": 0, "_emscripten_get_heap_size": _emscripten_get_heap_size, "_emscripten_memcpy_big": _emscripten_memcpy_big, "_emscripten_resize_heap": _emscripten_resize_heap, "_emscripten_set_click_callback_on_thread": _emscripten_set_click_callback_on_thread, "_fd_write": _fd_write, "_time": _time, "abort": abort, "abortOnCannotGrowMemory": abortOnCannotGrowMemory, "abortStackOverflow": abortStackOverflow, "demangle": demangle, "demangleAll": demangleAll, "flush_NO_FILESYSTEM": flush_NO_FILESYSTEM, "getTempRet0": getTempRet0, "jsStackTrace": jsStackTrace, "memory": wasmMemory, "nullFunc_ii": nullFunc_ii, "nullFunc_iiii": nullFunc_iiii, "nullFunc_jiji": nullFunc_jiji, "setTempRet0": setTempRet0, "stackTrace": stackTrace, "table": wasmTable, "tempDoublePtr": tempDoublePtr };
+var asmLibraryArg = { "___lock": ___lock, "___unlock": ___unlock, "___wasi_fd_write": ___wasi_fd_write, "__memory_base": 1024, "__table_base": 0, "_emscripten_get_heap_size": _emscripten_get_heap_size, "_emscripten_memcpy_big": _emscripten_memcpy_big, "_emscripten_resize_heap": _emscripten_resize_heap, "_fd_write": _fd_write, "_time": _time, "abort": abort, "abortOnCannotGrowMemory": abortOnCannotGrowMemory, "abortStackOverflow": abortStackOverflow, "demangle": demangle, "demangleAll": demangleAll, "flush_NO_FILESYSTEM": flush_NO_FILESYSTEM, "getTempRet0": getTempRet0, "jsStackTrace": jsStackTrace, "memory": wasmMemory, "nullFunc_ii": nullFunc_ii, "nullFunc_iiii": nullFunc_iiii, "nullFunc_jiji": nullFunc_jiji, "setTempRet0": setTempRet0, "stackTrace": stackTrace, "table": wasmTable, "tempDoublePtr": tempDoublePtr };
 // EMSCRIPTEN_START_ASM
 var asm =Module["asm"]// EMSCRIPTEN_END_ASM
 (asmGlobalArg, asmLibraryArg, buffer);
@@ -2251,6 +2047,18 @@ var ___errno_location = Module["___errno_location"] = function() {
   assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
   assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
   return Module["asm"]["___errno_location"].apply(null, arguments)
+};
+
+var _canvas_init = Module["_canvas_init"] = function() {
+  assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
+  assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
+  return Module["asm"]["_canvas_init"].apply(null, arguments)
+};
+
+var _canvas_move = Module["_canvas_move"] = function() {
+  assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
+  assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
+  return Module["asm"]["_canvas_move"].apply(null, arguments)
 };
 
 var _check_primes = Module["_check_primes"] = function() {
@@ -2275,24 +2083,6 @@ var _free = Module["_free"] = function() {
   assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
   assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
   return Module["asm"]["_free"].apply(null, arguments)
-};
-
-var _get_exponential_defaults = Module["_get_exponential_defaults"] = function() {
-  assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
-  assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
-  return Module["asm"]["_get_exponential_defaults"].apply(null, arguments)
-};
-
-var _get_heap_offset = Module["_get_heap_offset"] = function() {
-  assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
-  assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
-  return Module["asm"]["_get_heap_offset"].apply(null, arguments)
-};
-
-var _get_numeric_range = Module["_get_numeric_range"] = function() {
-  assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
-  assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
-  return Module["asm"]["_get_numeric_range"].apply(null, arguments)
 };
 
 var _get_size_factor = Module["_get_size_factor"] = function() {

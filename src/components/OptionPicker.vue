@@ -105,8 +105,8 @@
             cursor: pointer;
             display: inline-block;
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-            color: #aaccff;
-            border: 2px solid #aaccff;
+            color: $front-main;
+            border: 2px solid $front-main;
             font-weight: bold;
             overflow-x: hidden;
             background: #12c2e9;
@@ -120,7 +120,7 @@
                 transition: background-color .3s, color .3s;
 
                 &:not(:last-child) {
-                    border-right: 1px solid #aaccff;
+                    border-right: 1px solid $front-main;
                 }
 
                 &:hover {
@@ -129,8 +129,8 @@
                 }
 
                 &.active {
-                    color: #222233;
-                    background-color: #aaccff;
+                    color: $back-main;
+                    background-color: $front-main;
                 }
             }    
         }

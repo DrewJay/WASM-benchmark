@@ -103,7 +103,7 @@
          */
 
         private handleSelect(val: string) {
-            
+
             this.benchmark = val;
 
             (window as any).cancelAnimationFrame(this.animationFrameId);
@@ -138,7 +138,7 @@
          */
 
         private perf(callback: (...args: any) => number): number {
-            
+
             const t1: number = performance.now();
             const result = callback(...this.sniffParams());
             const t2: number = performance.now();
@@ -216,7 +216,7 @@
          */
 
         private setInfo() {
-            
+
             const inst: any = (this as any);
 
             const length: any = inst.module.HEAP8.length;
@@ -238,7 +238,7 @@
          */
 
         private setCanvas() {
-            
+
             const canvas: any = document.getElementsByClassName('cnv')[0];
             const context = canvas.getContext('2d');
 
@@ -268,7 +268,7 @@
             context.clearRect(0, 0, canvas.width, canvas.height);
 
             for (let i = directAddress; i < directAddress + itemAmount * itemSize; i += itemSize) {
-                
+
                 const [x, y] = [(window as any).getValue(i, 'double'), (window as any).getValue(i + 8, 'double')];
 
                 context.beginPath();

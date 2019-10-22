@@ -160,6 +160,7 @@
 
         private sniffParams(): any[] {
             return Object.keys(this.inputValues)
+                .sort()
                 .filter((val) => val.includes(this.benchmark)).map((val) => this.inputValues[val]);
         }
 
@@ -180,7 +181,7 @@
 
             const translate: string[] = [this.aliases.js[this.benchmark], this.aliases.c[this.benchmark]];
             const jsTime: number = this.perf((jfc as any)[translate[0]]);
-            const cTime: number = this.perf((this as any).module[`${translate[1]}`]);
+            const cTime: number = this.perf((this as any).module[translate[1]]);
 
             this.times.js = jsTime;
             this.times.c = cTime;

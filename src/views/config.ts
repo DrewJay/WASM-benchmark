@@ -22,19 +22,19 @@ const benchmarkConfig: object[] = [
         note: 'Calulates power using taylor logarithm method. Accuracy increases amount of iterations.',
         fields: [
             {
-                name: 'base',
+                name: '0_base',
                 type: 'text',
                 label: 'Power Base',
                 placeholder: '@double',
             },
             {
-                name: 'exponent',
+                name: '1_exponent',
                 type: 'text',
                 label: 'Power Exponent',
                 placeholder: '@int',
             },
             {
-                name: 'accuracy',
+                name: '2_accuracy',
                 type: 'text',
                 label: 'Accuracy',
                 placeholder: '@int',

@@ -36,7 +36,11 @@
                     <div v-if="!_val.type" v-html="generated">
                     </div>
 
-                    <canvas v-if="_val.type === 'canvas'" class='cnv' width="268"></canvas>
+                    <VCanvas v-if="_val.type === 'canvas'" 
+                        :id="'screen'" 
+                        :width="'268'"
+                    >
+                    </VCanvas>
 
                 </div>
                 
@@ -71,6 +75,7 @@
     import OptionPicker from '@/components/OptionPicker.vue';
     import VInput from '@/components/VInput.vue';
     import VButton from '@/components/VButton.vue';
+    import VCanvas from '@/components/VCanvas.vue';
     import { benchmarkConfig, aliasConfig } from '@/views/config';
     import jfc from '@/jfc';
 
@@ -79,6 +84,7 @@
             OptionPicker,
             VInput,
             VButton,
+            VCanvas,
         },
     })
 
@@ -95,13 +101,11 @@
         private animationFrameId: any = 0;
         private localAddressStack: any[] = [];
 
-
         /**
          * OptionPicker selection handler.
          *
          * @param {string} value - selected value
          */
-
         private handleSelect(val: string) {
 
             this.benchmark = val;
@@ -114,18 +118,15 @@
             }
         }
 
-
         /**
          * VInput value change handler.
          *
          * @param {string} val - new value
          */
-
         private handleChange(val: string) {
             const split: any[] = val.split('=');
             this.inputValues[`${this.benchmark}.${split[0]}`] = parseInt(split[1], 10);
         }
-
 
         /**
          * Execute preformance test and measure delta by substracting
@@ -136,7 +137,6 @@
          *
          * @return {number} - time in seconds
          */
-
         private perf(callback: (...args: any) => number): number {
 
             const t1: number = performance.now();
@@ -150,20 +150,17 @@
             return diff;
         }
 
-
         /**
          * Sniff parameters from configuration to pass into
          * perf callback function.
          *
          * @return {Array} - array of params
          */
-
         private sniffParams(): any[] {
             return Object.keys(this.inputValues)
                 .sort()
                 .filter((val) => val.includes(this.benchmark)).map((val) => this.inputValues[val]);
         }
-
 
         /**
          * Handler for execution button clicking which starts
@@ -171,7 +168,6 @@
          *
          * @param {string} val - identifier of button
          */
-
         private handlePress(val: string) {
 
             if (val.includes('noperf')) {
@@ -187,7 +183,6 @@
             this.times.c = cTime;
         }
 
-
         /**
          * This function finds names of self executable
          * callbacks from configuration and executes them
@@ -196,7 +191,6 @@
          *
          * @pipeType - invokes callbacks
          */
-
         private invokeSelfExecutables() {
 
             const keys: string[] = Object.keys(this.aliases.js);
@@ -208,14 +202,12 @@
             });
         }
 
-
         /**
          * This callback is dynamically called by invokeSelfExecutables
          * function and fills fallback div container with proper HTML.
          *
          * @pipeType - modifies DOM
          */
-
         private setInfo() {
 
             const inst: any = (this as any);
@@ -230,17 +222,15 @@
                 <div><span>Alloc index</span> <span>~${(length - stackOffset) / inst.module._get_size_factor()} itrs</span></div>`;
         }
 
-
         /**
          * This callback is dynamically called from noperf invoking
          * call chain. It animates canvas based on parameters.
          *
          * @pipeType - modifies DOM
          */
-
         private setCanvas() {
 
-            const canvas: any = document.getElementsByClassName('cnv')[0];
+            const canvas: any = document.getElementById('screen');
             const context = canvas.getContext('2d');
 
             (window as any).cancelAnimationFrame(this.animationFrameId);
@@ -250,7 +240,6 @@
             this.renderPointsFromOffset(addr, canvas, context);
         }
 
-
         /**
          * Get all point structures from memory offset and
          * render them in the canvas.
@@ -259,7 +248,6 @@
          * @param {any} canvas - canvas DOM element reference
          * @param {any} context - context object reference
          */
-
         private renderPointsFromOffset(address: number, canvas: any, context: any) {
 
             const itemAmount = (window as any).getValue(address, 'i32');
@@ -278,13 +266,12 @@
                 context.fill();
             }
 
-            (window as any)._canvas_move();
+            (this as any).module._canvas_move();
 
             this.animationFrameId = window.requestAnimationFrame( () => {
                 this.renderPointsFromOffset(address, canvas, context);
             });
         }
-
 
         /**
          * Sniff if perf callback used any heap memory. If it did,
@@ -293,7 +280,6 @@
          *
          * @param {any} value - value returned from perf callback
          */
-
         private pushAddresses(value: any) {
 
             if (this.benchmark.includes('memconsume')) {
@@ -304,17 +290,15 @@
             }
         }
 
-
         /**
          * Free addresses from localAddressStack.
          *
          * @pipeType - modify local state
          */
-
         private freeAddresses() {
 
             this.localAddressStack.forEach ((val) => {
-                (window as any)._free(val);
+                (this as any).module._free(val);
             });
 
             this.localAddressStack = [];
@@ -351,13 +335,6 @@
     .bench-wrap {
         &:not(:first-child) {
             margin-top: 1.5rem;
-        }
-
-        &#memconsume_noperf_particle_animation {
-            canvas {
-                background-color: black;
-                border: 2px solid $front-main;
-            }
         }
 
         &#selfexec_info {

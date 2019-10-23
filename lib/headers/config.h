@@ -10,5 +10,7 @@
 
 #define CNV_COE_MIN -1
 #define CNV_COE_MAX 1
+#define BOOST_RADIUS 30
+#define BOOST 2
 
 #endif

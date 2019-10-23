@@ -31,7 +31,6 @@
         @Prop() private ids!: string[];
         @Prop() private bind!: string[];
 
-
         /**
          * Handle option selection and return
          * option unique identifier.
@@ -40,7 +39,6 @@
          *
          * @return {string} - identifier of option
          */
-
         @Emit('select')
         public handleSelect(evt: any) {
 
@@ -55,19 +53,16 @@
             return evt!.currentTarget!.id;
         }
 
-
         /**
          * Select first element by default.
          *
          * @pipeType - modify internal state
          */
-
         private mounted() {
             this.handleSelect({
                 currentTarget: document.getElementById(this.ids[0]),
             });
         }
-
 
         /**
          * Access bound OptionPickers and disable them. This
@@ -75,7 +70,6 @@
          *
          * @pipeType - disable other components
          */
-
         private accessAndDisableBoundComponents() {
 
             if (!this.bind) { return; }

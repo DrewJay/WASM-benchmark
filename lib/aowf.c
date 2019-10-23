@@ -1,8 +1,6 @@
 #include "headers/config.h"
 #include "headers/aowf.h"
 
-packLine *pack_l;
-
 /** 
  * Create ${amount} amount of structures and
  * allocate sufficient memory for them.
@@ -19,7 +17,6 @@ packLine *pack_l;
  * 
  * @return {pack*} - address of a pack
  */
-
 packLine *iterative_allocator(int amount) {
 
     free(pack_l->dataPtr);
@@ -42,27 +39,23 @@ packLine *iterative_allocator(int amount) {
     return pack_l;
 }
 
-
 /**
  * Find where malloc allocates dummy dataPtr. Useful
  * when deciding real usable memory.
  * 
  * @return {int} - memory address
  */
-
 int get_heap_offset() {
     void *item = malloc(sizeof(char));
     free(item);
     return (int)item;
 }
 
-
 /**
  * This much memory is taken per one iteration.
  * 
  * @return {int} - amount of bytes
  */
-
 int get_size_factor() {
     return sizeof(pack);
 }

@@ -15,7 +15,6 @@
  *
  * @return {double} - approximation of logarithm value
  */
-
 double taylor_log(double x, unsigned int n) {
  
     double ref = 1-x;
@@ -38,7 +37,6 @@ double taylor_log(double x, unsigned int n) {
     return approx;
 }
 
-
 /*
  * Function:  taylor_pow
  * --------------------
@@ -51,7 +49,6 @@ double taylor_log(double x, unsigned int n) {
  *
  * @return {double} - approximation of value of power function
  */
-
 double taylor_pow(double x, double y, unsigned int n) {
     
     double approx = 1.0;
@@ -65,14 +62,12 @@ double taylor_pow(double x, double y, unsigned int n) {
     return approx;
 }
 
-
 /*
  * Pass numeric range constant from C
  * to JavaScript global scope.
  * 
  * @return {exponentialDefaults*} - structure with defaults information
  */
-
 exponentialDefaults *get_exponential_defaults() {
   
     exponentialDefaults *ed = malloc(sizeof(exponentialDefaults));

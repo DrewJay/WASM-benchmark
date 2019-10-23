@@ -31,7 +31,6 @@
 
         private focused: boolean = false;
 
-
         /**
          * Emit event when value changes.
          *
@@ -39,30 +38,25 @@
          *
          * @return {string} - key value string pair
          */
-
         @Emit('change')
         private handleChange(evt: any) {
             return `${this.name}=${evt!.currentTarget!.value}`;
         }
-
 
         /**
          * Handle element focus.
          *
          * @pipeType - internally change focus state
          */
-
         private handleFocus() {
             this.focused = true;
         }
-
 
         /**
          * Handle element blur.
          *
          * @pipeType - internally change focus state
          */
-
         private handleBlur() {
             this.focused = false;
         }

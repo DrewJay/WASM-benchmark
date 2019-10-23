@@ -9,14 +9,12 @@
  * 
  * @return {int} - flag if number is prime
  */
-
 int is_prime(int num) {
     for(int i=2; i<num; i++) {
         if(num%i == 0) return 0;
     }
     return (num != 1 && num != 0) ? 1 : 0;
 }
-
 
 /** 
  * Simply iterate over $num numbers and
@@ -27,7 +25,6 @@ int is_prime(int num) {
  * 
  * @return {int} - the amount of primes
  */
-
 int check_primes(num) {
     int count = 0;
     for(int i=0; i<num; i++) {
@@ -36,7 +33,6 @@ int check_primes(num) {
     return count;
 }
 
-
 /** 
  * Pass numeric range constant from C
  * to JavaScript global scope.
@@ -44,7 +40,6 @@ int check_primes(num) {
  * @return {int} - number range
  * 
  */
-
 int get_numeric_range() {
     return NUM_RANGE;
 }

@@ -1,9 +1,5 @@
 #include "headers/canvas.h"
 
-pointLine *point_l;
-int width;
-int height;
-
 /**
  * Initialize canvas points. Returns address of pointLine,
  * object storing metadata and address of actual points
@@ -15,7 +11,6 @@ int height;
  * 
  * @return {pointLine*} - address of pointLine object
  */
-
 pointLine *canvas_init(int c_width, int c_height, int amount) {
 
     free(point_l->dataPtr);
@@ -45,20 +40,30 @@ pointLine *canvas_init(int c_width, int c_height, int amount) {
     return point_l;
 }
 
-
 /**
  * Move points of canvas by recalculating their coordinates
  * and coefficients.
  * 
  * @return {pointLine*} - address of pointLine object
  */
-
 pointLine *canvas_move() {
     
     for(int i=0; i<point_l->item_amount; i++) {
 
-        int posX = point_l->dataPtr[i].x + point_l->dataPtr[i].horizontal_coe;
-        int posY = point_l->dataPtr[i].y + point_l->dataPtr[i].vertical_coe;
+        int boost = 0;
+
+        if( (mouseX > 0) 
+            && ( (point_l->dataPtr[i].x < mouseX + BOOST_RADIUS && point_l->dataPtr[i].x > mouseX - BOOST_RADIUS)
+            && (point_l->dataPtr[i].y < mouseY + BOOST_RADIUS && point_l->dataPtr[i].y > mouseY - BOOST_RADIUS) )
+        ) {
+            boost = BOOST;
+        }
+
+        int effective_boostX = charge(point_l->dataPtr[i].horizontal_coe) * boost;
+        int effective_boostY = charge(point_l->dataPtr[i].vertical_coe) * boost;
+
+        int posX = point_l->dataPtr[i].x + point_l->dataPtr[i].horizontal_coe + effective_boostX;
+        int posY = point_l->dataPtr[i].y + point_l->dataPtr[i].vertical_coe + effective_boostY;
 
         if(posX <= 0 || posX >= width) {
             point_l->dataPtr[i].horizontal_coe *= -1;
@@ -68,13 +73,12 @@ pointLine *canvas_move() {
             point_l->dataPtr[i].vertical_coe *= -1;
         }
 
-        point_l->dataPtr[i].x += point_l->dataPtr[i].horizontal_coe;
-        point_l->dataPtr[i].y += point_l->dataPtr[i].vertical_coe;
+        point_l->dataPtr[i].x += point_l->dataPtr[i].horizontal_coe + effective_boostX;
+        point_l->dataPtr[i].y += point_l->dataPtr[i].vertical_coe + effective_boostY;
     }
 
     return point_l;
 }
-
 
 /**
  * Generate random double in range.
@@ -84,14 +88,25 @@ pointLine *canvas_move() {
  * 
  * @return {double} - random double
  */
-
 double randouble(double min, double max) {
     double range = (max - min); 
     double div = RAND_MAX / range;
     return min + (rand() / div);
 }
 
+/**
+ * Find if number is positive or negative. Return charge
+ * index (1 or -1) representing this infomation.
+ * 
+ * @param {double} num - number
+ * 
+ * @return {int} - charge index
+ */
+int charge(double num) {
+    return (num >= 0) ? 1 : -1;
+}
 
+// General main shared accross all modules.
 int main() {
     srand(time(NULL));
 }

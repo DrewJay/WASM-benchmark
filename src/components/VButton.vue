@@ -24,7 +24,6 @@
         @Prop() private label!: string;
         @Prop() private name!: string;
 
-
         /**
          * Emit value when button is pressed.
          *
@@ -32,7 +31,6 @@
          *
          * @return {string} - name of button
          */
-
         @Emit('press')
         private handlePress(evt: any) {
             return this.name;

@@ -3,19 +3,13 @@
 
 /** 
  * Create ${amount} amount of structures and
- * allocate sufficient memory for them.
+ * allocate sufficient memory for them. This
+ * is performance benchmark method and member
+ * variables of pack structure have no purpose.
  * 
- * Returns addres 's' of the pack.
+ * @param {int} amount - amount of items to create
  * 
- * val(s) = | sz | sz | sz | sz | dt | dt | dt | dt |
- * where sz = int(sz), dt = int(addr(dt))
- * 
- * val(dt) = | it | it | it | it | ...*amount
- * where it = struct(packLine)
- * 
- * @param {int} amount - amount of items to define
- * 
- * @return {pack*} - address of a pack
+ * @return {packLine*} - address of the packLine
  */
 packLine *iterative_allocator(int amount) {
 

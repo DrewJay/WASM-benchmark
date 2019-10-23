@@ -2,14 +2,13 @@
 #include "headers/aowf.h"
 
 /** 
- * Create ${amount} amount of structures and
+ * Create @amount amount of structures and
  * allocate sufficient memory for them. This
  * is performance benchmark method and member
  * variables of pack structure have no purpose.
  * 
- * @param {int} amount - amount of items to create
- * 
- * @return {packLine*} - address of the packLine
+ * @param amount amount of items to create
+ * @return address of the packLine
  */
 packLine *iterative_allocator(int amount) {
 
@@ -37,7 +36,7 @@ packLine *iterative_allocator(int amount) {
  * Find where malloc allocates dummy dataPtr. Useful
  * when deciding real usable memory.
  * 
- * @return {int} - memory address
+ * @return memory address
  */
 int get_heap_offset() {
     void *item = malloc(sizeof(char));
@@ -48,7 +47,7 @@ int get_heap_offset() {
 /**
  * This much memory is taken per one iteration.
  * 
- * @return {int} - amount of bytes
+ * @return amount of bytes
  */
 int get_size_factor() {
     return sizeof(pack);

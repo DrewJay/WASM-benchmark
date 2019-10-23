@@ -104,7 +104,7 @@
         /**
          * OptionPicker selection handler.
          *
-         * @param {string} value - selected value
+         * @param {string} value selected value
          */
         private handleSelect(val: string) {
 
@@ -121,7 +121,7 @@
         /**
          * VInput value change handler.
          *
-         * @param {string} val - new value
+         * @param {string} val new value
          */
         private handleChange(val: string) {
             const split: any[] = val.split('=');
@@ -133,9 +133,8 @@
          * time of function execution finish and time of function
          * exectuion invokation.
          *
-         * @param {function} callback - callback to execute
-         *
-         * @return {number} - time in seconds
+         * @param {function} callback callback to execute
+         * @return {number} time in seconds
          */
         private perf(callback: (...args: any) => number): number {
 
@@ -154,7 +153,7 @@
          * Sniff parameters from configuration to pass into
          * perf callback function.
          *
-         * @return {Array} - array of params
+         * @return {Array} array of params
          */
         private sniffParams(): any[] {
             return Object.keys(this.inputValues)
@@ -166,7 +165,7 @@
          * Handler for execution button clicking which starts
          * performance measuring routines.
          *
-         * @param {string} val - identifier of button
+         * @param {string} val identifier of button
          */
         private handlePress(val: string) {
 
@@ -188,8 +187,6 @@
          * callbacks from configuration and executes them
          * with no parameters. It is used when we need to load
          * some data asynchronously after using OptionPicker.
-         *
-         * @pipeType - invokes callbacks
          */
         private invokeSelfExecutables() {
 
@@ -205,8 +202,6 @@
         /**
          * This callback is dynamically called by invokeSelfExecutables
          * function and fills fallback div container with proper HTML.
-         *
-         * @pipeType - modifies DOM
          */
         private setInfo() {
 
@@ -225,8 +220,6 @@
         /**
          * This callback is dynamically called from noperf invoking
          * call chain. It animates canvas based on parameters.
-         *
-         * @pipeType - modifies DOM
          */
         private setCanvas() {
 
@@ -244,9 +237,9 @@
          * Get all point structures from memory offset and
          * render them in the canvas.
          *
-         * @param {number} address - start offset of structure array
-         * @param {any} canvas - canvas DOM element reference
-         * @param {any} context - context object reference
+         * @param {number} address start offset of structure array
+         * @param {any} canvas canvas DOM element reference
+         * @param {any} context context object reference
          */
         private renderPointsFromOffset(address: number, canvas: any, context: any) {
 
@@ -278,7 +271,7 @@
          * push it to address stack, because addresses need to be
          * later released.
          *
-         * @param {any} value - value returned from perf callback
+         * @param {any} value anything returned from perf callback
          */
         private pushAddresses(value: any) {
 
@@ -292,8 +285,6 @@
 
         /**
          * Free addresses from localAddressStack.
-         *
-         * @pipeType - modify local state
          */
         private freeAddresses() {
 

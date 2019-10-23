@@ -35,9 +35,8 @@
          * Handle option selection and return
          * option unique identifier.
          *
-         * @param {any} event - event object referent
-         *
-         * @return {string} - identifier of option
+         * @param {any} event event object referent
+         * @return {string} identifier of option
          */
         @Emit('select')
         public handleSelect(evt: any) {
@@ -55,8 +54,6 @@
 
         /**
          * Select first element by default.
-         *
-         * @pipeType - modify internal state
          */
         private mounted() {
             this.handleSelect({
@@ -67,8 +64,6 @@
         /**
          * Access bound OptionPickers and disable them. This
          * creates functionality of entangled components.
-         *
-         * @pipeType - disable other components
          */
         private accessAndDisableBoundComponents() {
 

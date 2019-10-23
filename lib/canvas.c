@@ -5,11 +5,10 @@
  * object storing metadata and address of actual points
  * ordered in linear fashion.
  * 
- * @param {int} c_width - width of canvas
- * @param {int} c_height - height of canvas
- * @param {int} amount - amount of points to initialize
- * 
- * @return {pointLine*} - address of pointLine object
+ * @param c_width width of canvas
+ * @param c_height height of canvas
+ * @param amount amount of points to initialize
+ * @return address of pointLine object
  */
 pointLine *canvas_init(int c_width, int c_height, int amount) {
 
@@ -44,7 +43,7 @@ pointLine *canvas_init(int c_width, int c_height, int amount) {
  * Move points of canvas by recalculating their coordinates
  * and coefficients.
  * 
- * @return {pointLine*} - address of pointLine object
+ * @return address of pointLine object
  */
 pointLine *canvas_move() {
     
@@ -83,10 +82,9 @@ pointLine *canvas_move() {
 /**
  * Generate random double in range.
  * 
- * @param {double} min - lower bound
- * @param {double} max - upper bound
- * 
- * @return {double} - random double
+ * @param min lower bound
+ * @param max upper bound
+ * @return random double
  */
 double randouble(double min, double max) {
     double range = (max - min); 
@@ -98,15 +96,16 @@ double randouble(double min, double max) {
  * Find if number is positive or negative. Return charge
  * index (1 or -1) representing this infomation.
  * 
- * @param {double} num - number
- * 
- * @return {int} - charge index
+ * @param num number
+ * @return charge index
  */
 int charge(double num) {
     return (num >= 0) ? 1 : -1;
 }
 
-// General main shared accross all modules.
+/**
+ * Main routine shared accross all modules.
+ */
 int main() {
     srand(time(NULL));
 }

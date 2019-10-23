@@ -34,9 +34,8 @@
         /**
          * Emit event when value changes.
          *
-         * @param {any} evt - event object reference.
-         *
-         * @return {string} - key value string pair
+         * @param {any} evt event object reference.
+         * @return {string} key value string pair
          */
         @Emit('change')
         private handleChange(evt: any) {
@@ -45,8 +44,6 @@
 
         /**
          * Handle element focus.
-         *
-         * @pipeType - internally change focus state
          */
         private handleFocus() {
             this.focused = true;
@@ -54,8 +51,6 @@
 
         /**
          * Handle element blur.
-         *
-         * @pipeType - internally change focus state
          */
         private handleBlur() {
             this.focused = false;

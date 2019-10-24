@@ -58,11 +58,11 @@ pointLine *canvas_move() {
             boost = BOOST;
         }
 
-        int effective_boostX = charge(point_l->dataPtr[i].horizontal_coe) * boost;
-        int effective_boostY = charge(point_l->dataPtr[i].vertical_coe) * boost;
+        double effective_boostX = charge(point_l->dataPtr[i].horizontal_coe) * boost;
+        double effective_boostY = charge(point_l->dataPtr[i].vertical_coe) * boost;
 
-        int posX = point_l->dataPtr[i].x + point_l->dataPtr[i].horizontal_coe + effective_boostX;
-        int posY = point_l->dataPtr[i].y + point_l->dataPtr[i].vertical_coe + effective_boostY;
+        double posX = point_l->dataPtr[i].x + point_l->dataPtr[i].horizontal_coe + effective_boostX;
+        double posY = point_l->dataPtr[i].y + point_l->dataPtr[i].vertical_coe + effective_boostY;
 
         if (posX <= 0 || posX >= width) {
             point_l->dataPtr[i].horizontal_coe *= -1;
@@ -72,8 +72,8 @@ pointLine *canvas_move() {
             point_l->dataPtr[i].vertical_coe *= -1;
         }
 
-        point_l->dataPtr[i].x += point_l->dataPtr[i].horizontal_coe + effective_boostX;
-        point_l->dataPtr[i].y += point_l->dataPtr[i].vertical_coe + effective_boostY;
+        point_l->dataPtr[i].x = posX;
+        point_l->dataPtr[i].y = posY;
     }
 
     return point_l;

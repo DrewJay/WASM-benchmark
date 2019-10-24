@@ -95,6 +95,7 @@
             display: inline-block;
             box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
             color: $front-main;
+            white-space: nowrap;
             border: 2px solid $front-main;
             font-weight: bold;
             overflow-x: hidden;

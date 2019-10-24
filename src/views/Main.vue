@@ -61,8 +61,14 @@
         <!-- benchmark result container -->
         <transition name="fade">
             <div class="results" v-if="times.js">
-                <div class="lang" id="c"><span>C</span> benchmark ran in {{ times.c }} seconds.</div>
-                <div class="lang" id="js"><span>JS</span> benchmark ran in {{ times.js }} seconds.</div>
+                
+                <div class="lang" id="c">
+                    <span>C</span> benchmark ran in {{ times.c }} seconds. ({{ times.diff }}% {{ times.kword }})
+                </div>
+
+                <div class="lang" id="js">
+                    <span>JS</span> benchmark ran in {{ times.js }} seconds.
+                </div>
             </div>
         </transition>
 
@@ -96,7 +102,7 @@
         private aliases: any = aliasConfig;
         private benchmark: string = '';
         private inputValues: any = {};
-        private times: any = {c: null, js: null};
+        private times: any = {c: null, js: null, diff: null, kword: null};
         private generated: string = '';
         private animationFrameId: any = 0;
         private localAddressStack: any[] = [];
@@ -180,6 +186,10 @@
 
             this.times.js = jsTime;
             this.times.c = cTime;
+
+            const [less, more] = [jsTime, cTime].sort();
+            this.times.diff = ((more / less) * 100).toFixed(3);
+            this.times.kword = (jsTime > cTime ? 'faster' : 'slower');
         }
 
         /**
@@ -377,12 +387,14 @@
         position: fixed;
         top: 100%;
         transform: translateY(-100%);
-        width: 70%;
+        width: 50%;
         right: 0;
         
         .lang {
             padding: 10px;
-            font-size: 1.5rem;
+            font-size: 1rem;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
             right: 0;
             color: white;
             white-space: nowrap;

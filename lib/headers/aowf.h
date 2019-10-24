@@ -20,8 +20,8 @@ typedef struct {
 
 packLine *pack_l;
 
-packLine *iterative_allocator (int amount);
-int get_heap_offset ();
-int get_size_factor (); 
+packLine *iterative_allocator   (int amount);
+int get_heap_offset             ();
+int get_size_factor             ();
 
 #endif

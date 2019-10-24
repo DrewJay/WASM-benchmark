@@ -20,7 +20,7 @@ packLine *iterative_allocator(int amount) {
     pack_l->item_size = sizeof(pack);
     pack_l->dataPtr = malloc(sizeof *pack_l->dataPtr * amount);
 
-    for(int itr=0; itr<pack_l->item_amount; itr++) {
+    for (int itr = 0; itr < pack_l->item_amount; itr++) {
     
         pack item;
         item.i = itr;

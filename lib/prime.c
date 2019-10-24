@@ -9,8 +9,8 @@
  * @return flag if number is prime
  */
 int is_prime(int num) {
-    for(int i=2; i<num; i++) {
-        if(num%i == 0) return 0;
+    for (int i = 2; i < num; i++) {
+        if (num%i == 0) return 0;
     }
     return (num != 1 && num != 0) ? 1 : 0;
 }
@@ -25,7 +25,7 @@ int is_prime(int num) {
  */
 int check_primes(num) {
     int count = 0;
-    for(int i=0; i<num; i++) {
+    for (int i = 0; i < num; i++) {
         if (is_prime(i)) count++;
     }
     return count;

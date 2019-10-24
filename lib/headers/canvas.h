@@ -29,9 +29,9 @@ int height;
 int mouseX;
 int mouseY;
 
-double randouble(double min, double max);
-pointLine *canvas_init (int c_width, int c_height, int amount);
-pointLine *canvas_move ();
-int charge (double num);
+double randouble        (double min, double max);
+pointLine *canvas_init  (int c_width, int c_height, int amount);
+pointLine *canvas_move  ();
+int charge              (double num);
 
 #endif

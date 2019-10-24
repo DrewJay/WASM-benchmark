@@ -20,9 +20,9 @@ double taylor_log(double x, unsigned int n) {
     double approx = 0.0;
     double pw = 1.0;
  
-    for(unsigned int i=0; i<=n-1; i++) {
+    for (unsigned int i = 0; i <= n-1; i++) {
         
-        if(x > 0 && x < 1) {
+        if (x > 0 && x < 1) {
             pw = pw*ref;
             approx = approx - (pw/(i+1));
         }
@@ -52,7 +52,7 @@ double taylor_pow(double x, double y, unsigned int n) {
     double approx = 1.0;
     double frac = 1.0;
  
-    for(unsigned int i=0; i<=n-1; i++) {
+    for (unsigned int i = 0; i <= n-1; i++) {
         frac = frac*(((y*taylor_log(x,n))/(i+1)));
         approx = approx + frac;
     }

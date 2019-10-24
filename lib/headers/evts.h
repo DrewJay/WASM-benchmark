@@ -7,7 +7,7 @@
 #include <emscripten/html5.h>
 #include "canvas.h"
 
-EM_BOOL mouse_callback (int, const EmscriptenMouseEvent*, void*);
-void evts_setup ();
+EM_BOOL mouse_callback  (int, const EmscriptenMouseEvent*, void*);
+void evts_setup         ();
 
 #endif

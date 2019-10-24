@@ -23,7 +23,7 @@ pointLine *canvas_init(int c_width, int c_height, int amount) {
     width = c_width;
     height = c_height;
     
-    for(int i=0; i<point_l->item_amount; i++) {
+    for (int i = 0; i < point_l->item_amount; i++) {
         
         point p;
         p.x = c_width/2;
@@ -47,13 +47,13 @@ pointLine *canvas_init(int c_width, int c_height, int amount) {
  */
 pointLine *canvas_move() {
     
-    for(int i=0; i<point_l->item_amount; i++) {
+    for (int i = 0; i < point_l->item_amount; i++) {
 
         int boost = 0;
 
-        if( (mouseX > 0) 
-            && ( (point_l->dataPtr[i].x < mouseX + BOOST_RADIUS && point_l->dataPtr[i].x > mouseX - BOOST_RADIUS)
-            && (point_l->dataPtr[i].y < mouseY + BOOST_RADIUS && point_l->dataPtr[i].y > mouseY - BOOST_RADIUS) )
+        if ((mouseX > 0) 
+            && ((point_l->dataPtr[i].x < mouseX + BOOST_RADIUS && point_l->dataPtr[i].x > mouseX - BOOST_RADIUS)
+            && (point_l->dataPtr[i].y < mouseY + BOOST_RADIUS && point_l->dataPtr[i].y > mouseY - BOOST_RADIUS))
         ) {
             boost = BOOST;
         }
@@ -64,11 +64,11 @@ pointLine *canvas_move() {
         int posX = point_l->dataPtr[i].x + point_l->dataPtr[i].horizontal_coe + effective_boostX;
         int posY = point_l->dataPtr[i].y + point_l->dataPtr[i].vertical_coe + effective_boostY;
 
-        if(posX <= 0 || posX >= width) {
+        if (posX <= 0 || posX >= width) {
             point_l->dataPtr[i].horizontal_coe *= -1;
         }
 
-        if(posY <= 0 || posY >= height) {
+        if (posY <= 0 || posY >= height) {
             point_l->dataPtr[i].vertical_coe *= -1;
         }
 

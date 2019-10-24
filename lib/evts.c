@@ -15,7 +15,7 @@ EM_BOOL mouse_callback(int eventType, const EmscriptenMouseEvent *e, void *userD
         mouseY = e->targetY;
     }
 
-    if(eventType == EMSCRIPTEN_EVENT_MOUSELEAVE) {
+    if (eventType == EMSCRIPTEN_EVENT_MOUSELEAVE) {
         mouseX = -1;
     }
 

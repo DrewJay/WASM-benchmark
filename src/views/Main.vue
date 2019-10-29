@@ -1,5 +1,5 @@
 <template>
-    <div class="home">
+    <div class="main">
 
         <h1 id="maintitle">WASM Benchmark</h1>
 
@@ -94,7 +94,7 @@
         },
     })
 
-    export default class Home extends Vue {
+    export default class Main extends Vue {
 
         private optNames: string[] = benchmarkConfig.map((val) => (val as any).label);
         private optIds: string[] = benchmarkConfig.map((val) => (val as any).id);

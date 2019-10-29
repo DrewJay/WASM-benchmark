@@ -8,7 +8,7 @@ Vue.config.productionTip = false;
 Vue.prototype.module = (window as any).Module;
 
 new Vue({
-  router,
-  store,
-  render: (h) => h(App),
+    router,
+    store,
+    render: (h) => h(App),
 }).$mount('#app');

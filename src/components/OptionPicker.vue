@@ -35,8 +35,8 @@
          * Handle option selection and return
          * option unique identifier.
          *
-         * @param {any} event event object referent
-         * @return {string} identifier of option
+         * @param event - event object referent
+         * @returns identifier of option
          */
         @Emit('select')
         public handleSelect(evt: any) {

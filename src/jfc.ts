@@ -4,8 +4,9 @@
 /**
  * Checks if number is prime in efficient fashion.
  *
- * @param {number} num number to check
- * @return {boolean} prime status
+ * @param num - number to check
+ *
+ * @returns prime status
  */
 const isPrime = (num: number) => {
     for (let i = 2; i < num; i++) {
@@ -17,8 +18,9 @@ const isPrime = (num: number) => {
 /**
  * Searches first @num numbers for primes.
  *
- * @param {number} num numeric range
- * @return {number} amount of prime numbers
+ * @param num - numeric range
+ *
+ * @returns amount of prime numbers
  */
 const checkPrimes = (num: number) => {
     let count: number = 0;
@@ -31,9 +33,10 @@ const checkPrimes = (num: number) => {
 /**
  * Calculate Taylor logarithm.
  *
- * @param {number} x logarithm subject
- * @param {number} n amount of iterations
- * @return {number} logarithm approximation
+ * @param x - logarithm subject
+ * @param n - amount of iterations
+ *
+ * @returns logarithm approximation
  */
 const taylorLog = (x: number, n: number) => {
 
@@ -57,10 +60,11 @@ const taylorLog = (x: number, n: number) => {
 /**
  * Use Taylor logarithm to calculate power.
  *
- * @param {number} x power base
- * @param {number} y power exponent
- * @param {number} n amount of iterations.
- * @return {number} power approximation
+ * @param x - power base
+ * @param y - power exponent
+ * @param n - amount of iterations.
+ *
+ * @returns power approximation
  */
 const taylorPow = (x: number, y: number, n: number) => {
 
@@ -77,8 +81,9 @@ const taylorPow = (x: number, y: number, n: number) => {
 /**
  * Iteratively create @amount structures.
  *
- * @param {number} amount the number of structures
- * @return {object} allocated structures
+ * @param amount - the number of structures
+ *
+ * @returns allocated structures
  */
 const iterativeAllocator = (amount: number): object => {
 

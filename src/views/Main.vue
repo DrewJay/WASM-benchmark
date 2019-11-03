@@ -110,7 +110,7 @@
         /**
          * OptionPicker selection handler.
          *
-         * @param {string} value selected value
+         * @param value - selected value
          */
         private handleSelect(val: string) {
 
@@ -127,7 +127,7 @@
         /**
          * VInput value change handler.
          *
-         * @param {string} val new value
+         * @param val - new value
          */
         private handleChange(val: string) {
             const split: any[] = val.split('=');
@@ -139,8 +139,8 @@
          * time of function execution finish and time of function
          * exectuion invokation.
          *
-         * @param {function} callback callback to execute
-         * @return {number} time in seconds
+         * @param callback - callback to execute
+         * @returns time in seconds
          */
         private perf(callback: (...args: any) => number): number {
 
@@ -159,7 +159,7 @@
          * Sniff parameters from configuration to pass into
          * perf callback function.
          *
-         * @return {Array} array of params
+         * @returns array of params
          */
         private sniffParams(): any[] {
             return Object.keys(this.inputValues)
@@ -171,7 +171,7 @@
          * Handler for execution button clicking which starts
          * performance measuring routines.
          *
-         * @param {string} val identifier of button
+         * @param val - identifier of button
          */
         private handlePress(val: string) {
 
@@ -247,9 +247,9 @@
          * Get all point structures from memory offset and
          * render them in the canvas.
          *
-         * @param {number} address start offset of structure array
-         * @param {any} canvas canvas DOM element reference
-         * @param {any} context context object reference
+         * @param address - start offset of structure array
+         * @param canvas - canvas DOM element reference
+         * @param contex - t context object reference
          */
         private renderPointsFromOffset(address: number, canvas: any, context: any) {
 
@@ -281,7 +281,7 @@
          * push it to address stack, because addresses need to be
          * later released.
          *
-         * @param {any} value anything returned from perf callback
+         * @param value - anything returned from perf callback
          */
         private pushAddresses(value: any) {
 

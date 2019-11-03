@@ -1,7 +1,8 @@
-// Configuration file describing data for generating
-// DOM content for benchmark and functional data like
-// callback names or identifiers.
-
+/**
+ * Configuration file describing data for generating
+ * DOM content for benchmark and functional data like
+ * callback names or identifiers.
+ */
 const benchmarkConfig: object[] = [
     {
         id: 'prime_lookup',

@@ -27,8 +27,8 @@
         /**
          * Emit value when button is pressed.
          *
-         * @param evt - event object reference
-         * @returns name of button
+         * @param evt - Event object reference
+         * @returns Name of button
          */
         @Emit('press')
         private handlePress(evt: any) {

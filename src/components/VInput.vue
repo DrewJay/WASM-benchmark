@@ -34,8 +34,8 @@
         /**
          * Emit event when value changes.
          *
-         * @param evt - event object reference.
-         * @return key value string pair
+         * @param evt - Event object reference.
+         * @returns Key value string pair
          */
         @Emit('change')
         private handleChange(evt: any) {

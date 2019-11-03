@@ -110,7 +110,7 @@
         /**
          * OptionPicker selection handler.
          *
-         * @param value - selected value
+         * @param value - Selected value
          */
         private handleSelect(val: string) {
 
@@ -127,7 +127,7 @@
         /**
          * VInput value change handler.
          *
-         * @param val - new value
+         * @param val - New value
          */
         private handleChange(val: string) {
             const split: any[] = val.split('=');
@@ -139,8 +139,8 @@
          * time of function execution finish and time of function
          * exectuion invokation.
          *
-         * @param callback - callback to execute
-         * @returns time in seconds
+         * @param callback - Callback to execute
+         * @returns Time in seconds
          */
         private perf(callback: (...args: any) => number): number {
 
@@ -159,7 +159,7 @@
          * Sniff parameters from configuration to pass into
          * perf callback function.
          *
-         * @returns array of params
+         * @returns Array of params
          */
         private sniffParams(): any[] {
             return Object.keys(this.inputValues)
@@ -171,7 +171,7 @@
          * Handler for execution button clicking which starts
          * performance measuring routines.
          *
-         * @param val - identifier of button
+         * @param val - Identifier of button
          */
         private handlePress(val: string) {
 
@@ -188,7 +188,7 @@
             this.times.c = cTime;
 
             const [less, more] = [jsTime, cTime].sort();
-            this.times.diff = ((more / less) * 100).toFixed(3);
+            this.times.diff = (((more / less) - 1) * 100).toFixed(3);
             this.times.kword = (jsTime > cTime ? 'faster' : 'slower');
         }
 
@@ -218,12 +218,13 @@
             const inst: any = (this as any);
 
             const length: any = inst.module.HEAP8.length;
-            const stackOffset: any = (window as any).STACK_MAX;
+            const stackOffset: any = (window as any).STACK_BASE;
+            const heapOffset: any = (window as any).STACK_MAX;
 
             this.generated =
                 `<div><span>Total memory</span> <span>${length} bytes</span></div>
-                <div><span>Heap offset</span> <span>${stackOffset} bytes</span></div>
-                <div><span>Usable memory</span> <span>${length - stackOffset} bytes</span></div>
+                <div><span>STACK offset</span> <span>${stackOffset}th byte</span></div>
+                <div><span>HEAP offset</span> <span>${heapOffset}th byte</span></div>
                 <div><span>Alloc index</span> <span>~${(length - stackOffset) / inst.module._get_size_factor()} itrs</span></div>`;
         }
 
@@ -247,9 +248,9 @@
          * Get all point structures from memory offset and
          * render them in the canvas.
          *
-         * @param address - start offset of structure array
-         * @param canvas - canvas DOM element reference
-         * @param contex - t context object reference
+         * @param address - Start offset of structure array
+         * @param canvas - Canvas DOM element reference
+         * @param contex - Context object reference
          */
         private renderPointsFromOffset(address: number, canvas: any, context: any) {
 
@@ -281,7 +282,7 @@
          * push it to address stack, because addresses need to be
          * later released.
          *
-         * @param value - anything returned from perf callback
+         * @param value - Anything returned from perf callback
          */
         private pushAddresses(value: any) {
 

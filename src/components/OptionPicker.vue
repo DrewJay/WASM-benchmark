@@ -6,7 +6,7 @@
             <div class="item" 
                 v-for="(val, idx) in values" 
                 :id="ids[idx]" 
-                @click="handleSelect($event)"
+                @click="emitValue($event)"
                 v-bind:key="idx">
                 {{ val }}
             </div>
@@ -19,12 +19,12 @@
 <script lang="ts">
     
     import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+    import { Emitor } from './types';
 
     @Component
-    export default class OptionPicker extends Vue {
+    export default class OptionPicker extends Vue implements Emitor {
 
         public activeElement!: HTMLElement|null;
-        private type: string = 'OptionPicker';
 
         @Prop() private name!: string;
         @Prop() private values!: string[];
@@ -39,7 +39,7 @@
          * @returns Identifier of option
          */
         @Emit('select')
-        public handleSelect(evt: any) {
+        public emitValue(evt: any) {
 
             this.accessAndDisableBoundComponents();
 
@@ -56,7 +56,7 @@
          * Select first element by default.
          */
         private mounted() {
-            this.handleSelect({
+            this.emitValue({
                 currentTarget: document.getElementById(this.ids[0]),
             });
         }

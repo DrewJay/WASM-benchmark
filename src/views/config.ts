@@ -20,7 +20,7 @@ const benchmarkConfig: object[] = [
     {
         id: 'taylor_chain',
         label: 'Taylor Chain',
-        note: 'Calulates power using taylor logarithm method. Accuracy increases amount of iterations.',
+        note: 'Calulates power using taylor logarithm method.',
         fields: [
             {
                 name: '0_base',

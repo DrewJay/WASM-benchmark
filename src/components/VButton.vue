@@ -5,7 +5,7 @@
             
             <input 
                 type="button"
-                @click="handlePress"
+                @click="emitValue"
                 :value="label"
             >
             
@@ -17,9 +17,10 @@
 <script lang="ts">
     
     import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+    import { Emitor } from './types';
 
     @Component
-    export default class VButton extends Vue {
+    export default class VButton extends Vue implements Emitor {
 
         @Prop() private label!: string;
         @Prop() private name!: string;
@@ -31,7 +32,7 @@
          * @returns Name of button
          */
         @Emit('press')
-        private handlePress(evt: any) {
+        public emitValue(evt: any) {
             return this.name;
         }
     }

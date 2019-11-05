@@ -1,6 +1,3 @@
-// JS implementations of C functions.
-// Used to measure performance deltas.
-
 /**
  * Checks if number is prime in efficient fashion.
  *

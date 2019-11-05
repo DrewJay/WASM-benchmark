@@ -7,7 +7,7 @@
             
             <input 
                 type="text"
-                @keyup="handleChange"
+                @keyup="emitValue"
                 @focus="handleFocus"
                 @blur="handleBlur"
                 :placeholder="placeholder"
@@ -21,6 +21,7 @@
 <script lang="ts">
     
     import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+    import { Emitor } from './types';
 
     @Component
     export default class VInput extends Vue {
@@ -38,7 +39,7 @@
          * @returns Key value string pair
          */
         @Emit('change')
-        private handleChange(evt: any) {
+        public emitValue(evt: any) {
             return `${this.name}=${evt!.currentTarget!.value}`;
         }
 
@@ -73,12 +74,15 @@
             margin-bottom: .2rem;
             display: table;
             border-radius: 5px;
-            transition: color .3s;
+            transition: color .3s, min-width .3s;
+            transition-timing-function: linear;
+            min-width: 0;
 
             &.focused {
                 background: #12c2e9;
                 background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
                 background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
+                min-width: 240px; 
                 color: white;
             }
         }

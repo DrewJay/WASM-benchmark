@@ -38,7 +38,6 @@ export class API {
      * @returns Request data
      */
     public async request(name: string, stringify: boolean = false): Promise<any> {
-
         const data = (stringify) ? JSON.stringify(this.data) : this.data;
 
         const config: Endpoint = this.lookup(name);

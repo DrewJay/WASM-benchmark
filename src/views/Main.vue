@@ -83,6 +83,9 @@
     import VButton from '@/components/VButton.vue';
     import VCanvas from '@/components/VCanvas.vue';
     import { benchmarkConfig, aliasConfig } from '@/views/config';
+    import { APIConsumer } from '@/components/types';
+    import { compositeDataCarry } from '../modules/network/types';
+    import { API } from '@/modules/network/api';
     import jfc from '@/jfc';
 
     @Component({
@@ -94,8 +97,9 @@
         },
     })
 
-    export default class Main extends Vue {
+    export default class Main extends Vue implements APIConsumer {
 
+        public httpCaller: API = new API(name);
         private optNames: string[] = benchmarkConfig.map((val) => (val as any).label);
         private optIds: string[] = benchmarkConfig.map((val) => (val as any).id);
         private config: object[] = benchmarkConfig;
@@ -180,16 +184,18 @@
                 return;
             }
 
-            const translate: string[] = [this.aliases.js[this.benchmark], this.aliases.c[this.benchmark]];
-            const jsTime: number = this.perf((jfc as any)[translate[0]]);
-            const cTime: number = this.perf((this as any).module[translate[1]]);
+            const translate: string[] = [this.aliases.c[this.benchmark], this.aliases.js[this.benchmark]];
+            const cTime: number = this.perf((this as any).module[translate[0]]);
+            const jsTime: number = this.perf((jfc as any)[translate[1]]);
 
-            this.times.js = jsTime;
+            this.sendResultsToStorage(cTime, jsTime);
+
             this.times.c = cTime;
+            this.times.js = jsTime;
 
-            const [less, more] = [jsTime, cTime].sort();
+            const [less, more] = [cTime, jsTime].sort();
             this.times.diff = (((more / less) - 1) * 100).toFixed(3);
-            this.times.kword = (jsTime > cTime ? 'faster' : 'slower');
+            this.times.kword = (cTime < jsTime ? 'faster' : 'slower');
         }
 
         /**
@@ -305,6 +311,22 @@
 
             this.localAddressStack = [];
         }
+
+        /**
+         * Send data to public API.
+         *
+         * @param cTime - C performance time to store
+         * @param jsTime - JS perfomance time to store
+         */
+        private async sendResultsToStorage(cTime: number, jsTime: number) {
+            const requestResult = await this.httpCaller.feed({key: 'wasmb'}).request('getWasmb');
+
+            const dataArr = JSON.parse(requestResult.data.shape);
+            dataArr.push({cTime, jsTime});
+
+            const updated: compositeDataCarry = {key: 'wasmb', value: JSON.stringify(dataArr)};
+            await this.httpCaller.feed(updated).request('setWasmb');
+        }
     }
 
 </script>
@@ -339,7 +361,7 @@
             margin-top: 1.5rem;
         }
 
-        &#selfexec_info {
+        &[id*='selfexec_info'] {
             div div {
                 display: block;
                 color: $front-main;

@@ -90,6 +90,7 @@
     .option-picker {
         
         .option-picker-wrap {    
+            font-size: $picker-font-size;
             border-radius: $borderRadius;
             cursor: pointer;
             display: inline-block;

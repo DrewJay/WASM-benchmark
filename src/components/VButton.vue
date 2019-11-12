@@ -44,13 +44,15 @@
     .v-button-wrap {
 
         input[type="button"] {
-            border: 2px solid $front-main;
-            color: $front-main;
+            font-size: $button-font-size;
+            border: 2px solid $wasm-front;
+            color: #d4d0fb;
             padding: .8em 1.5em;
             font-weight: bold;
             border-radius: 5px;
-            background-color: $back-main;
+            background-color: $wasm-back;
             transition: background-color .3s, color .3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
             cursor: pointer;
             width: 272px;
 

@@ -16,7 +16,7 @@
         <!-- generate benchmark content -->
         <div v-for="(val, idx) in config" v-bind:key="idx">
             
-            <div class="fadeInUp animated" v-if="val.id === benchmark">
+            <div class="container fadeInUp animated" v-if="val.id === benchmark">
                 
                 <h2>{{ val.label }}</h2>
                 <div v-if="val.note" :class="`note-${val.id}`" v-html="val.note"></div>
@@ -96,7 +96,6 @@
             VCanvas,
         },
     })
-
     export default class Main extends Vue implements APIConsumer {
 
         public httpCaller: API = new API(name);
@@ -333,6 +332,10 @@
 
 <style lang="scss">
 
+    .container {
+        padding-bottom: 20px;
+    }
+
     .fade-enter-active, .fade-leave-active {
         transition: opacity .5s;
     }
@@ -354,6 +357,7 @@
 
     h2 {
         color: $front-main;
+        text-decoration: underline;
     }
 
     .bench-wrap {
@@ -364,37 +368,35 @@
         &[id*='selfexec_info'] {
             div div {
                 display: block;
-                color: $front-main;
+                font-size: $info-font-size;
+                color: $wasm-front;
                 margin-top: 0rem;
                 display: flex;
                 justify-content: space-between;
-                width: 280px;
+                width: 350px;
                 align-items: center;
                 
                 &:not(:first-child) {
                     margin-top: 1rem;
                 }
 
+                > span {
+                    width: 280px;
+                    padding: 6px 6px;
+                    border-radius: 5px;
+                    text-align: center;
+                    font-weight: bold;
+                }
+
                 > span:first-child {
                     background-color: $front-main;
                     color: $back-main;
-                    padding: 6px 0px;
-                    width: 150px;
-                    font-weight: bold;
-                    text-align: center;
                     margin-right: 1rem;
-                    border-radius: 5px;
                 }
 
                 > span:not(:first-child) {
-                    font-weight: bold;
-                    border-top-left-radius: 5px;
                     color: $front-main;
-                    border: 2px solid $front-main;
-                    padding: 5px 0px;
-                    width: 150px;
-                    text-align: center;
-                    border-radius: 5px;
+                    border: 2px solid $wasm-back;
                 }
             }
         }
@@ -415,7 +417,7 @@
         
         .lang {
             padding: 10px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             overflow-x: hidden;
             text-overflow: ellipsis;
             right: 0;
@@ -443,46 +445,6 @@
             background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
             background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
         }
-    }
-
-    @-webkit-keyframes fadeInUp {
-        from {
-            opacity: 0;
-            -webkit-transform: translate3d(0, 30%, 0);
-            transform: translate3d(0, 30%, 0);
-        }
-
-        to {
-            opacity: 1;
-            -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-        }
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            -webkit-transform: translate3d(0, 30%, 0);
-            transform: translate3d(0, 30%, 0);
-        }
-
-        to {
-            opacity: 1;
-            -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-        }
-    }
-
-    .fadeInUp {
-        -webkit-animation-name: fadeInUp;
-        animation-name: fadeInUp;
-    }
-
-    .animated {
-        -webkit-animation-duration: 1s;
-        animation-duration: 1s;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
     }
 
 </style>

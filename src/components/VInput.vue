@@ -21,7 +21,7 @@
 <script lang="ts">
     
     import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
-    import { Emitor } from './types';
+    import { Emitor } from '@/types/componentTypes';
 
     @Component
     export default class VInput extends Vue {

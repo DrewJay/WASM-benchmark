@@ -1,4 +1,4 @@
-import { Endpoint, compositeDataCarry } from '@/modules/network/types';
+import { Endpoint, compositeDataCarry } from '@/types/networkTypes';
 import { endpointCollection } from '@/modules/network/endpoints';
 import axios from 'axios';
 

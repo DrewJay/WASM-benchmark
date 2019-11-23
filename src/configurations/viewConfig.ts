@@ -81,6 +81,19 @@ const benchmarkConfig: object[] = [
             },
         ],
     },
+    {
+        id: 'system_actions',
+        label: 'System Actions',
+        norun: true,
+        fields: [
+            {
+                name: 'apireset',
+                type: 'button',
+                label: 'API Reset',
+                callback: 'apiReset',
+            },
+        ],
+    },
 ];
 
 const aliasConfig: object = {

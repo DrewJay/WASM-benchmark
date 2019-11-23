@@ -37,6 +37,14 @@
                     <div v-if="!_val.type" v-html="generated">
                     </div>
 
+                    <VButton
+                        v-if="_val.type === 'button'"
+                        :name="_val.name"
+                        :label="_val.label"
+                        :flags="['generic']"
+                        @press="invokeCallbacks(_val.callback)"
+                    ></VButton>
+
                     <VCanvas v-if="_val.type === 'canvas'" 
                         :id="'screen'" 
                         :width="'268'"
@@ -83,12 +91,15 @@
     import VInput from '@/components/VInput.vue';
     import VButton from '@/components/VButton.vue';
     import VCanvas from '@/components/VCanvas.vue';
-    import { benchmarkConfig, aliasConfig } from '@/views/config';
-    import { APIConsumer } from '@/components/types';
-    import { compositeDataCarry } from '../modules/network/types';
+    import { benchmarkConfig, aliasConfig } from '@/configurations/viewConfig';
+    import { APIConsumer } from '@/types/componentTypes';
+    import { compositeDataCarry } from '@/types/networkTypes';
+    import Dynamics from '@/modules/Dynamics';
+    import { AutoInit } from '@/types/generalTypes';
     import { API } from '@/modules/network/api';
     import jfc from '@/jfc';
 
+    @AutoInit()
     @Component({
         components: {
             OptionPicker,
@@ -99,7 +110,7 @@
     })
     export default class Main extends Vue implements APIConsumer {
 
-        public httpCaller: API = new API(name);
+        public httpCaller!: API;
         private optNames: string[] = benchmarkConfig.map((val) => (val as any).label);
         private optIds: string[] = benchmarkConfig.map((val) => (val as any).id);
         private config: object[] = benchmarkConfig;
@@ -110,6 +121,15 @@
         private generated: string = '';
         private animationFrameId: any = 0;
         private localAddressStack: any[] = [];
+
+        /**
+         * Invoke callbacks after button click.
+         *
+         * @param callback - Callback name
+         */
+        private invokeCallbacks(callback: string) {
+            Dynamics.invoke(this, callback);
+        }
 
         /**
          * OptionPicker selection handler.
@@ -210,28 +230,9 @@
 
             keys.forEach((val) => {
                 if (val.includes('selfexec')) {
-                    (this as any)[this.aliases.js[val]]();
+                    Dynamics.invoke(this, this.aliases.js[val]);
                 }
             });
-        }
-
-        /**
-         * This callback is dynamically called by invokeSelfExecutables
-         * function and fills fallback div container with proper HTML.
-         */
-        private setInfo() {
-
-            const inst: any = (this as any);
-
-            const length: any = inst.module.HEAP8.length;
-            const stackOffset: any = (window as any).STACK_BASE;
-            const heapOffset: any = (window as any).STACK_MAX;
-
-            this.generated =
-                `<div><span>Total memory</span> <span>${length} bytes</span></div>
-                <div><span>STACK offset</span> <span>${stackOffset}th byte</span></div>
-                <div><span>HEAP offset</span> <span>${heapOffset}th byte</span></div>
-                <div><span>Alloc index</span> <span>~${(length - stackOffset) / inst.module._get_size_factor()} itrs</span></div>`;
         }
 
         /**
@@ -322,7 +323,7 @@
             const requestResult = await this.httpCaller.feed({key: 'wasmb'}).request('getWasmb');
 
             const dataArr = JSON.parse(requestResult.data.shape);
-            dataArr.push({cTime, jsTime});
+            dataArr.push({benchmark: this.benchmark, cTime, jsTime});
 
             const updated: compositeDataCarry = {key: 'wasmb', value: JSON.stringify(dataArr)};
             await this.httpCaller.feed(updated).request('setWasmb');
@@ -398,7 +399,7 @@
                 }
 
                 > span:not(:first-child) {
-                    color: $front-main;
+                    color: $wasm-front;
                     border: 2px solid $wasm-back;
                 }
             }

@@ -1,4 +1,4 @@
-import { EndpointCollection } from './types';
+import { EndpointCollection } from '@/types/networkTypes';
 
 /**
  * Collection of API endpoints used in project.

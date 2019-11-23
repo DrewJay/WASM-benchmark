@@ -1,7 +1,7 @@
 <template>
     <div class="v-button">
         
-        <div class="v-button-wrap">
+        <div class="v-button-wrap" :class="flags">
             
             <input 
                 type="button"
@@ -17,13 +17,14 @@
 <script lang="ts">
     
     import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
-    import { Emitor } from './types';
+    import { Emitor } from '@/types/componentTypes';
 
     @Component
     export default class VButton extends Vue implements Emitor {
 
         @Prop() private label!: string;
         @Prop() private name!: string;
+        @Prop() private flags!: string[];
 
         /**
          * Emit value when button is pressed.
@@ -59,6 +60,15 @@
             &:hover {
                 background-color: $front-main;
                 color: $back-main;
+            }
+        }
+
+        &.generic {
+            input[type="button"] {
+                box-shadow: none;
+                font-size: $button-generic-font-size;
+                width: 250px;
+                padding: .5em 1.5em;
             }
         }
     }

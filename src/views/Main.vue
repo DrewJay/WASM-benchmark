@@ -16,7 +16,8 @@
         <!-- generate benchmark content -->
         <div v-for="(val, idx) in config" v-bind:key="idx">
             
-            <div class="container fadeInUp animated" v-if="val.id === benchmark">
+            <!-- apply animate.css class here if needed -->
+            <div class="container animated" v-if="val.id === benchmark">
                 
                 <h2>{{ val.label }}</h2>
                 <div v-if="val.note" :class="`note-${val.id}`" v-html="val.note"></div>
@@ -346,12 +347,14 @@
 
     h1 {
         color: $front-main;
+        font-size: 2.5em;
 
         &#maintitle {
-            padding-left: 50px;
+            padding-left: 60px;
             background-image: url('/img/icons/wasm.svg');
             background-repeat: no-repeat;
-            background-size: 35px 30px;
+            background-position: 0px 0px;
+            background-size: 43px 39px;
         }
     }
 

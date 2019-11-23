@@ -10,9 +10,9 @@
  * For interval (0;1) is used formula: log(1-x) = -x-(x^2/2)-(x^3/3)-...-(x^n/n)
  * For interval <1;INF) is used formula: log(x) = SUM[ ((x-1)/x)^n/n ]
  *
- * @param x subject of logarithm
- * @param n amount of iterations
- * @return approximation of logarithm value
+ * @param x Subject of logarithm
+ * @param n Amount of iterations
+ * @return Approximation of logarithm value
  */
 double taylor_log(double x, unsigned int n) {
  
@@ -42,10 +42,10 @@ double taylor_log(double x, unsigned int n) {
  * Estimates power value using function taylor_log(). It is expected to return relatively accurate power approximation.
  * Amount of iterations affects not only power calculation, but logarithm too.
  *
- * @param x power base
- * @param y power exponent
- * @param n amount of iterations
- * @return approximation of value of power function
+ * @param x Power base
+ * @param y Power exponent
+ * @param n Amount of iterations
+ * @return Approximation of value of power function
  */
 double taylor_pow(double x, double y, unsigned int n) {
     
@@ -64,7 +64,7 @@ double taylor_pow(double x, double y, unsigned int n) {
  * Pass numeric range constant from C
  * to JavaScript global scope.
  * 
- * @return structure with defaults information
+ * @return Structure with defaults information
  */
 exponentialDefaults *get_exponential_defaults() {
   

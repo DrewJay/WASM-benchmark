@@ -5,10 +5,10 @@
  * object storing metadata and address of actual points
  * ordered in linear fashion.
  * 
- * @param c_width width of canvas
- * @param c_height height of canvas
- * @param amount amount of points to initialize
- * @return address of pointLine object
+ * @param c_width Width of canvas
+ * @param c_height Height of canvas
+ * @param amount Amount of points to initialize
+ * @return Address of pointLine object
  */
 pointLine *canvas_init(int c_width, int c_height, int amount) {
 
@@ -43,7 +43,7 @@ pointLine *canvas_init(int c_width, int c_height, int amount) {
  * Move points of canvas by recalculating their coordinates
  * and coefficients.
  * 
- * @return address of pointLine object
+ * @return Address of pointLine object
  */
 pointLine *canvas_move() {
     
@@ -82,9 +82,9 @@ pointLine *canvas_move() {
 /**
  * Generate random double in range.
  * 
- * @param min lower bound
- * @param max upper bound
- * @return random double
+ * @param min Lower bound
+ * @param max Upper bound
+ * @return Random double
  */
 double randouble(double min, double max) {
     double range = (max - min); 
@@ -96,8 +96,8 @@ double randouble(double min, double max) {
  * Find if number is positive or negative. Return charge
  * index (1 or -1) representing this infomation.
  * 
- * @param num number
- * @return charge index
+ * @param num Number
+ * @return Charge index
  */
 int charge(double num) {
     return (num >= 0) ? 1 : -1;

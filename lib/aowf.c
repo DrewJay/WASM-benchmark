@@ -7,8 +7,8 @@
  * is performance benchmark method and member
  * variables of pack structure have no purpose.
  * 
- * @param amount amount of items to create
- * @return address of the packLine
+ * @param amount Amount of items to create
+ * @return Address of the packLine
  */
 packLine *iterative_allocator(int amount) {
 
@@ -36,7 +36,7 @@ packLine *iterative_allocator(int amount) {
  * Find where malloc allocates dummy dataPtr. Useful
  * when deciding real usable memory.
  * 
- * @return memory address
+ * @return Memory address
  */
 int get_heap_offset() {
     void *item = malloc(sizeof(char));
@@ -47,7 +47,7 @@ int get_heap_offset() {
 /**
  * This much memory is taken per one iteration.
  * 
- * @return amount of bytes
+ * @return Amount of bytes
  */
 int get_size_factor() {
     return sizeof(pack);

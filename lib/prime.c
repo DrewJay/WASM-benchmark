@@ -5,8 +5,8 @@
  * over all previous numbers and performing
  * cross division.
  * 
- * @param num the number we are checking
- * @return flag if number is prime
+ * @param num The number we are checking
+ * @return Flag if number is prime
  */
 int is_prime(int num) {
     for (int i = 2; i < num; i++) {
@@ -20,8 +20,8 @@ int is_prime(int num) {
  * apply prime check on them. Count and
  * return the amount of primes.
  * 
- * @param num first n whole numbers
- * @return the amount of primes
+ * @param num First n whole numbers
+ * @return The amount of primes
  */
 int check_primes(num) {
     int count = 0;
@@ -35,7 +35,7 @@ int check_primes(num) {
  * Pass numeric range constant from C
  * to JavaScript global scope.
  * 
- * @return number range
+ * @return Number range
  */
 int get_numeric_range() {
     return NUM_RANGE;

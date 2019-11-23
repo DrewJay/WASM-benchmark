@@ -3,10 +3,10 @@
 /**
  * Mousemove event callback function handler.
  * 
- * @param eventType flag defining event type 
- * @param e event object
- * @param userData callback parameter 
- * @return status code
+ * @param eventType Flag defining event type 
+ * @param e Event object
+ * @param userData Callback parameter 
+ * @return Status code
  */
 EM_BOOL mouse_callback(int eventType, const EmscriptenMouseEvent *e, void *userData) {
     

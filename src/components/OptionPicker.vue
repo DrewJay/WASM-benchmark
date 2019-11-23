@@ -19,7 +19,7 @@
 <script lang="ts">
     
     import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
-    import { Emitor } from './types';
+    import { Emitor } from '@/types/componentTypes';
 
     @Component
     export default class OptionPicker extends Vue implements Emitor {
@@ -90,6 +90,7 @@
     .option-picker {
         
         .option-picker-wrap {    
+            font-size: $picker-font-size;
             border-radius: $borderRadius;
             cursor: pointer;
             display: inline-block;

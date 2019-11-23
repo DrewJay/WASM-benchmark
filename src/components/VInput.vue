@@ -21,7 +21,7 @@
 <script lang="ts">
     
     import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
-    import { Emitor } from './types';
+    import { Emitor } from '@/types/componentTypes';
 
     @Component
     export default class VInput extends Vue {
@@ -65,25 +65,24 @@
     .v-input-wrap {
 
         .v-input-label {
-            color: $front-main;
+            color: $wasm-front;
             font-weight: 700;
-            font-size: 1rem;
-            background-color: $front-main;
-            color: $back-main;
-            padding: .4rem 1rem .4rem 1rem;
-            margin-bottom: .2rem;
+            font-size: $input-label-font-size;
+            border: 3px solid $wasm-back;
+            padding: .5rem 1rem .5rem 1rem;
+            background-color: $back-main;
+            margin-bottom: 0px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            z-index: 9999;
             display: table;
-            border-radius: 5px;
             transition: color .3s, min-width .3s;
             transition-timing-function: linear;
             min-width: 0;
+            border-bottom: none;
 
             &.focused {
-                background: #12c2e9;
-                background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
-                background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
-                min-width: 240px; 
-                color: white;
+                min-width: 235px; 
             }
         }
 
@@ -94,13 +93,14 @@
             border-radius: 5px;
             padding: 8px;
             font-weight: bold;
+            font-size: $input-font-size;
             color: $front-main;
             width: 250px;
             
             &::-webkit-input-placeholder {
                 color: $front-main;
                 font-style: oblique;
-                font-size: .7rem;
+                font-size: $input-font-size;
                 font-weight: 100;
             }
         }

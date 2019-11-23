@@ -94,7 +94,7 @@
     import { benchmarkConfig, aliasConfig } from '@/configurations/viewConfig';
     import { APIConsumer } from '@/types/componentTypes';
     import { compositeDataCarry } from '@/types/networkTypes';
-    import Dynamics from '@/modules/Dynamics';
+    import Dynamics from '@/modules/dynamics';
     import { AutoInit } from '@/types/generalTypes';
     import { API } from '@/modules/network/api';
     import jfc from '@/jfc';

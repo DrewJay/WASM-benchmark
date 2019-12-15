@@ -1,12 +1,11 @@
-import { Endpoint, compositeDataCarry } from '@/types/networkTypes';
-import { endpointCollection } from '@/modules/network/endpoints';
+import { Endpoint, EndpointCollection, compositeDataCarry } from '@/structures/types.struct';
+import { endpointCollection } from '@/configurations/endpoint.config';
 import axios from 'axios';
-
 
 /**
  * This class is used for sending HTTP requests to my public API.
  */
-export class API {
+export default class API {
 
     private name!: string;
     private data!: compositeDataCarry;
@@ -59,7 +58,7 @@ export class API {
      * Find endpoint by name and return it.
      *
      * @param name - The name of the endpoint
-     * @returns - Endpoint configuration object
+     * @returns Endpoint configuration object
      */
     private lookup(name: string): Endpoint {
         return endpointCollection[name];

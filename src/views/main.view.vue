@@ -4,12 +4,12 @@
         <h1 id="maintitle">WASM Benchmark</h1>
 
         <!-- generate option picker -->
-        <OptionPicker 
+        <VOptionPicker 
             :name="'benchmarks'" 
             :ids="[...optIds]" 
             :values="[...optNames]"
             @select="handleSelect"
-        ></OptionPicker>
+        ></VOptionPicker>
 
         <br/>
 
@@ -33,23 +33,25 @@
                     >
                     </VInput>
 
-                    <!-- fallback content component -->
-                    <div v-if="!_val.type" v-html="generated">
-                    </div>
-
+                    <!-- button content component -->
                     <VButton
                         v-if="_val.type === 'button'"
                         :name="_val.name"
                         :label="_val.label"
                         :flags="['generic']"
-                        @press="invokeCallbacks(_val.callback)"
-                    ></VButton>
+                        @press="invokeCallback(_val.callback)"
+                    >
+                    </VButton>
 
+                    <!-- canvas content component -->
                     <VCanvas v-if="_val.type === 'canvas'" 
                         :id="'screen'" 
                         :width="'268'"
                     >
                     </VCanvas>
+
+                    <!-- fallback content component -->
+                    <div v-if="!_val.type" v-html="generated"></div>
 
                 </div>
                 
@@ -66,6 +68,9 @@
             </div>
             
         </div>
+
+        <!-- content expanding component -->
+        <div class="content-expand"></div>
 
         <!-- benchmark result container -->
         <transition name="fade">
@@ -87,22 +92,22 @@
 <script lang="ts">
 
     import { Component, Vue } from 'vue-property-decorator';
-    import OptionPicker from '@/components/OptionPicker.vue';
-    import VInput from '@/components/VInput.vue';
-    import VButton from '@/components/VButton.vue';
-    import VCanvas from '@/components/VCanvas.vue';
-    import { benchmarkConfig, aliasConfig } from '@/configurations/viewConfig';
-    import { APIConsumer } from '@/types/componentTypes';
-    import { compositeDataCarry } from '@/types/networkTypes';
-    import Dynamics from '@/modules/dynamics';
-    import { AutoInit } from '@/types/generalTypes';
-    import { API } from '@/modules/network/api';
+    import VOptionPicker from '@/components/option.component.vue';
+    import VInput from '@/components/input.component.vue';
+    import VButton from '@/components/button.component.vue';
+    import VCanvas from '@/components/canvas.component.vue';
+    import appConfig from '@/configurations/app.config';
+    import aliasConfig from '@/configurations/alias.config';
+    import { compositeDataCarry, APIConsumer } from '@/structures/types.struct';
+    import Dynamics from '@/modules/dynamics.module';
+    import { AutoImplement } from '@/structures/decorators.struct';
+    import API from '@/modules/api.module';
     import jfc from '@/jfc';
 
-    @AutoInit()
+    @AutoImplement(['APIConsumer'])
     @Component({
         components: {
-            OptionPicker,
+            VOptionPicker,
             VInput,
             VButton,
             VCanvas,
@@ -110,10 +115,11 @@
     })
     export default class Main extends Vue implements APIConsumer {
 
-        public httpCaller!: API;
-        private optNames: string[] = benchmarkConfig.map((val) => (val as any).label);
-        private optIds: string[] = benchmarkConfig.map((val) => (val as any).id);
-        private config: object[] = benchmarkConfig;
+        public postman!: API;
+
+        private optNames: string[] = appConfig.map((val) => (val as any).label);
+        private optIds: string[] = appConfig.map((val) => (val as any).id);
+        private config: object[] = appConfig;
         private aliases: any = aliasConfig;
         private benchmark: string = '';
         private inputValues: any = {};
@@ -127,12 +133,12 @@
          *
          * @param callback - Callback name
          */
-        private invokeCallbacks(callback: string) {
+        private invokeCallback(callback: string) {
             Dynamics.invoke(this, callback);
         }
 
         /**
-         * OptionPicker selection handler.
+         * VOptionPicker selection handler.
          *
          * @param value - Selected value
          */
@@ -222,7 +228,7 @@
          * This function finds names of self executable
          * callbacks from configuration and executes them
          * with no parameters. It is used when we need to load
-         * some data asynchronously after using OptionPicker.
+         * some data asynchronously after using VOptionPicker.
          */
         private invokeSelfExecutables() {
 
@@ -230,7 +236,7 @@
 
             keys.forEach((val) => {
                 if (val.includes('selfexec')) {
-                    Dynamics.invoke(this, this.aliases.js[val]);
+                    this.invokeCallback(this.aliases.js[val]);
                 }
             });
         }
@@ -320,19 +326,24 @@
          * @param jsTime - JS perfomance time to store
          */
         private async sendResultsToStorage(cTime: number, jsTime: number) {
-            const requestResult = await this.httpCaller.feed({key: 'wasmb'}).request('getWasmb');
+            const requestResult = await this.postman.feed({key: 'wasmb'}).request('getWasmb');
 
             const dataArr = JSON.parse(requestResult.data.shape);
             dataArr.push({benchmark: this.benchmark, cTime, jsTime});
 
             const updated: compositeDataCarry = {key: 'wasmb', value: JSON.stringify(dataArr)};
-            await this.httpCaller.feed(updated).request('setWasmb');
+            await this.postman.feed(updated).request('setWasmb');
         }
     }
 
 </script>
 
 <style lang="scss">
+
+    .content-expand {
+        height: 80px;
+        width: 100px;
+    }
 
     .container {
         padding-bottom: 20px;
@@ -414,10 +425,9 @@
 
     .results {
         position: fixed;
-        top: 100%;
-        transform: translateY(-100%);
-        width: 50%;
         right: 0;
+        bottom: 0;
+        width: 100%;
         
         .lang {
             padding: 10px;
@@ -438,14 +448,11 @@
         }
 
         #c {
-            background: #2196f3;
             background: -webkit-linear-gradient(to right, #2196f3, #f44336);
             background: linear-gradient(to right, #2196f3, #f44336);
-            border-top-left-radius: 5px;
         }
 
         #js {
-            background: #12c2e9;
             background: -webkit-linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
             background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
         }

@@ -3,7 +3,7 @@
  * DOM content for benchmark and functional data like
  * callback names or identifiers.
  */
-const benchmarkConfig: object[] = [
+export default [
     {
         id: 'prime_lookup',
         label: 'Prime Lookup',
@@ -95,23 +95,3 @@ const benchmarkConfig: object[] = [
         ],
     },
 ];
-
-const aliasConfig: object = {
-    js: {
-        prime_lookup: 'checkPrimes',
-        taylor_chain: 'taylorPow',
-        memconsume_iterative_allocation: 'iterativeAllocator',
-        selfexec_info: 'setInfo',
-        memconsume_noperf_particle_animation: 'setCanvas',
-    },
-    c: {
-        prime_lookup: '_check_primes',
-        taylor_chain: '_taylor_pow',
-        memconsume_iterative_allocation: '_iterative_allocator',
-    },
-};
-
-export {
-    benchmarkConfig,
-    aliasConfig,
-};

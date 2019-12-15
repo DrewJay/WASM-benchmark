@@ -1,8 +1,7 @@
-import { compositeDataCarry } from '@/types/networkTypes';
+import { compositeDataCarry } from '@/structures/types.struct';
 
 /**
  * Class containing dynamic callbacks that can be invoked on specific context.
- *
  * @beta
  */
 export default class Dynamics {
@@ -12,7 +11,6 @@ export default class Dynamics {
      *
      * @param context - Dynamic context
      * @param callback - Name of function to execute
-     *
      */
     public static invoke(context: any, callback: string) {
         (Dynamics as any)[callback].apply(context);
@@ -25,7 +23,7 @@ export default class Dynamics {
         const dContext: any = this;
 
         const updated: compositeDataCarry = {key: 'wasmb', value: JSON.stringify([])};
-        await dContext.httpCaller.feed(updated).request('setWasmb');
+        await dContext.postman.feed(updated).request('setWasmb');
     }
 
     /**

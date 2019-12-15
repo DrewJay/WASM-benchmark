@@ -2,7 +2,6 @@
  * Checks if number is prime in efficient fashion.
  *
  * @param num - Number to check
- *
  * @returns Prime status
  */
 const isPrime = (num: number) => {
@@ -16,7 +15,6 @@ const isPrime = (num: number) => {
  * Searches first @num numbers for primes.
  *
  * @param num - Numeric range
- *
  * @returns Amount of prime numbers
  */
 const checkPrimes = (num: number) => {
@@ -32,7 +30,6 @@ const checkPrimes = (num: number) => {
  *
  * @param x - Logarithm subject
  * @param n - Amount of iterations
- *
  * @returns Logarithm approximation
  */
 const taylorLog = (x: number, n: number) => {
@@ -60,7 +57,6 @@ const taylorLog = (x: number, n: number) => {
  * @param x - Power base
  * @param y - Power exponent
  * @param n - Amount of iterations.
- *
  * @returns Power approximation
  */
 const taylorPow = (x: number, y: number, n: number) => {
@@ -79,7 +75,6 @@ const taylorPow = (x: number, y: number, n: number) => {
  * Iteratively create @amount structures.
  *
  * @param amount - The number of structures
- *
  * @returns Allocated structures
  */
 const iterativeAllocator = (amount: number): object => {

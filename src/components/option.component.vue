@@ -19,10 +19,10 @@
 <script lang="ts">
     
     import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
-    import { Emitor } from '@/types/componentTypes';
+    import { Emitor } from '@/structures/types.struct';
 
     @Component
-    export default class OptionPicker extends Vue implements Emitor {
+    export default class VOptionPicker extends Vue implements Emitor {
 
         public activeElement!: HTMLElement|null;
 
@@ -62,7 +62,7 @@
         }
 
         /**
-         * Access bound OptionPickers and disable them. This
+         * Access bound VOptionPickers and disable them. This
          * creates functionality of entangled components.
          */
         private accessAndDisableBoundComponents() {

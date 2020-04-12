@@ -11,7 +11,6 @@
  * @return Address of pointLine object
  */
 pointLine *canvas_init(int c_width, int c_height, int amount) {
-
     free(point_l->dataPtr);
     free(point_l);
 
@@ -24,7 +23,6 @@ pointLine *canvas_init(int c_width, int c_height, int amount) {
     height = c_height;
     
     for (int i = 0; i < point_l->item_amount; i++) {
-        
         point p;
         p.x = c_width/2;
         p.y = c_height/2;
@@ -46,9 +44,7 @@ pointLine *canvas_init(int c_width, int c_height, int amount) {
  * @return Address of pointLine object
  */
 pointLine *canvas_move() {
-    
     for (int i = 0; i < point_l->item_amount; i++) {
-
         int boost = 0;
 
         if ((mouseX > 0) 

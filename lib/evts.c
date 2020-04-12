@@ -9,7 +9,6 @@
  * @return Status code
  */
 EM_BOOL mouse_callback(int eventType, const EmscriptenMouseEvent *e, void *userData) {
-    
     if (eventType == EMSCRIPTEN_EVENT_MOUSEMOVE) {
         mouseX = e->targetX;
         mouseY = e->targetY;

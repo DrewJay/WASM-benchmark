@@ -48,7 +48,6 @@ double taylor_log(double x, unsigned int n) {
  * @return Approximation of value of power function
  */
 double taylor_pow(double x, double y, unsigned int n) {
-    
     double approx = 1.0;
     double frac = 1.0;
  
@@ -67,7 +66,6 @@ double taylor_pow(double x, double y, unsigned int n) {
  * @return Structure with defaults information
  */
 exponentialDefaults *get_exponential_defaults() {
-  
     exponentialDefaults *ed = malloc(sizeof(exponentialDefaults));
     ed->base = BASE;
     ed->exponent = EXPO;

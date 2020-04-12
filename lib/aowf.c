@@ -11,7 +11,6 @@
  * @return Address of the packLine
  */
 packLine *iterative_allocator(int amount) {
-
     free(pack_l->dataPtr);
     free(pack_l);
 

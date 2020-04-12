@@ -5,7 +5,6 @@ import { compositeDataCarry } from '@/structures/types.struct';
  * @beta
  */
 export default class Dynamics {
-
     /**
      * Execute local function over specific context.
      *
@@ -31,7 +30,6 @@ export default class Dynamics {
      * function and fills fallback div container with proper HTML.
      */
     private static setInfo() {
-
         const dContext: any = (this as any);
 
         const length: any = dContext.module.HEAP8.length;

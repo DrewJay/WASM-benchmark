@@ -19,8 +19,8 @@ export default class VCanvas extends Vue {
     @Prop() private height!: string;
 
     /**
-    * When canvas is loaded, apply WASM event handlers.
-    */
+     * When canvas is loaded, apply WASM event handlers.
+     */
     private mounted() {
         (this as any).module._evts_setup();
     }

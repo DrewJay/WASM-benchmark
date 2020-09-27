@@ -15,7 +15,6 @@
  * @return Approximation of logarithm value
  */
 double taylor_log(double x, unsigned int n) {
- 
     double ref = 1-x;
     double approx = 0.0;
     double pw = 1.0;

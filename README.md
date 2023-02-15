@@ -4,7 +4,7 @@
 This application visualizes performance differences between classical JavaScript implementations and their WebAssembly counterparts.
 
 ## Usage
-You can simply install and run the Vue application by typing `npm install` and `npm run serve` in the browser and play with the available examples.
+You can simply install and run the Vue application by typing `npm install` and `npm run serve` and play with the available examples in the browser.
 
 ## Structure
 The C implementations are present in the `lib` folder, while the JavaScript counterparts can be found in `src/jfc.ts` file.

@@ -1,7 +1,7 @@
 # WASM-benchmark
 
 ## About
-This application visualizes performance differences between classic JavaScript implementations and their WebAssembly counterparts.
+This application visualizes performance differences between classical JavaScript implementations and their WebAssembly counterparts.
 
 ## Usage
 You can simply install and run the Vue application by typing `npm install` and `npm run serve` in the browser and play with the available examples.
